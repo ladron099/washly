@@ -1,18 +1,13 @@
 import 'package:boxicons/boxicons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:washly/components/buttons.dart';
-import 'package:washly/components/vars.dart';
-import 'package:washly/views/registerScreen.dart';
-
-import '../components/input.dart';
+import 'package:washly/utils/buttons.dart';
+import 'package:washly/utils/constants.dart';
+import 'package:washly/views/components/widgets.dart';
+import 'package:washly/views/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -21,15 +16,14 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            80.verticalSpace,
+            83.verticalSpace,
             Container(
-                height: 66.h,
+                height: 62.h,
                 child: Center(
                   child:
                       const Image(image: AssetImage('assets/images/rlogo.png')),
@@ -50,36 +44,36 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 83.w),
               child: Center(
                 child: Text(
-                  'Please enter your account information to login',
+                  'enteraccountinfo',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15.sp, 
                     color: Colors.black,
                   ),
-                ),
+                ).tr(),
               ),
             ),
             30.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: false,
-                hint: "E-mail address",
+                hint: "email",
                 inputIcon: Icon(Boxicons.bx_envelope),
               ),
             ),
             25.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: true,
-                hint: "Password",
-                inputIcon: const Icon(Boxicons.bx_lock_alt),
+                hint: "password",
+                inputIcon: Icon(Boxicons.bx_lock_alt),
               ),
             ),
             15.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -88,32 +82,32 @@ class LoginScreen extends StatelessWidget {
                       print("object");
                     },
                     child: Text(
-                      'Forgot Password?',
+                      'forgetpassword',
                       style: TextStyle(
                         fontSize: 15.sp, 
-                        color: primary,
+                        color: primaryColor,
                       ),
-                    ),
+                    ).tr(),
                   ),
                 ],
               ),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 onpress: () {},
-                text: 'Login',
+                text: 'login',
               ),
             ),
             20.verticalSpace,
             Container(
               height: 2.h,
-              color: borderGrey,
+              color: borderGreyColor,
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 color: Colors.red,
                 icon: Icon(
@@ -122,12 +116,12 @@ class LoginScreen extends StatelessWidget {
                   size: 22.sp,
                 ),
                 onpress: () {},
-                text: 'Login with Google',
+                text: 'loginggle',
               ),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 color: Color(0xFF2B468E),
                 icon: Icon(
@@ -136,7 +130,7 @@ class LoginScreen extends StatelessWidget {
                   size: 22.sp,
                 ),
                 onpress: () {},
-                text: 'Login with Facebook',
+                text: 'loginfb',
               ),
             ),
             30.verticalSpace,
@@ -144,12 +138,12 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Don't have an account?",
+                  "donthaveaccount",
                   style: TextStyle(
                     fontSize: 15.sp, 
                     color: Colors.black,
                   ),
-                ),
+                ).tr(),
                 5.horizontalSpace,
                 InkWell(
                   onTap: () {
@@ -160,12 +154,12 @@ class LoginScreen extends StatelessWidget {
                    
                   },
                   child: Text(
-                    'Sign Up',
+                    'signup',
                     style: TextStyle(
                       fontSize: 15.sp, 
-                      color: primary,
+                      color: primaryColor,
                     ),
-                  ),
+                  ).tr(),
                 ),
               ],
             ),

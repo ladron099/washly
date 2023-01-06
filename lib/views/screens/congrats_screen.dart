@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:washly/components/buttons.dart';
-import 'package:washly/components/vars.dart';
+import 'package:washly/utils/constants.dart';
 
-import 'loginScreen.dart';
-
-class RequestScreen extends StatelessWidget {
-  const RequestScreen({super.key});
+class CongratsScreen extends StatelessWidget {
+  const CongratsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +16,12 @@ class RequestScreen extends StatelessWidget {
           Container(
               height: 66.h,
               child: Center(
-                child:
-                    const Image(image: AssetImage('assets/images/rlogo.png')),
+                child: Image(image: AssetImage('assets/images/rlogo.png')),
               )),
           41.verticalSpace,
-          Container(
-              child: Center(
-            child:
-                const Image(image: AssetImage('assets/images/waitingback.png')),
-          )),
+          Center(
+            child: Image(image: AssetImage('assets/images/waitingback.png')),
+          ),
           38.verticalSpace,
           Center(
             child: Text(
@@ -38,24 +29,22 @@ class RequestScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 30.sp,
                 fontWeight: FontWeight.bold,
-                 color: secondary,
+                color: secondaryColor,
               ),
             ),
           ),
           31.verticalSpace,
           Padding(
-            padding:   EdgeInsets.symmetric(horizontal:45.w),
+            padding: EdgeInsets.symmetric(horizontal: 45.w),
             child: Text(
               'Your request has been sent successfully, we will verify your request in 30 days maximum.',
               style: TextStyle(
                 fontSize: 16.sp,
-                  color: Colors.black,
+                color: Colors.black,
               ),
             ),
           ),
           23.verticalSpace,
-       
-            
         ],
       ),
     );

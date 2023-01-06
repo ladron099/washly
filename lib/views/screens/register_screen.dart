@@ -1,18 +1,12 @@
 import 'package:boxicons/boxicons.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:washly/components/buttons.dart';
-import 'package:washly/components/vars.dart';
-import 'package:washly/views/phoneScreen.dart';
-
-import '../components/input.dart';
+import 'package:washly/utils/buttons.dart';
+import 'package:washly/utils/constants.dart';
+import 'package:washly/views/components/widgets.dart';
+import 'package:washly/views/screens/phone_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -21,29 +15,19 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: AppBar(
-        backgroundColor: Colors.white,
-         elevation: 0, 
-        leading: IconButton(
-          icon: Icon(
-            Boxicons.bx_left_arrow_alt,
-            size: 26.w,
-            color: primary,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),),
+        appBar: CustomAppBar(),
+        extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [ 
+            82.verticalSpace,
             Container(
-                height: 66.h,
+                height: 62.h,
                 child: Center(
                   child:
-                      const Image(image: AssetImage('assets/images/rlogo.png')),
+                     Image(image: AssetImage('assets/images/rlogo.png')),
                 )),
             40.verticalSpace,
             Center(
@@ -61,74 +45,74 @@ class RegisterScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 83.w),
               child: Center(
                 child: Text(
-                  'Please enter your information below to create a new account to use the app.',
+                  'createaccount',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 15.sp,
                      color: Colors.black,
                   ),
-                ),
+                ).tr(),
               ),
             ),
             30.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: false,
-                hint: "First name",
+                hint: "firstname",
                 inputIcon: Icon(Boxicons.bx_user),
               ),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: false,
-                hint: "Last name",
-                inputIcon: const Icon(Boxicons.bx_user),
+                hint: "lastname",
+                inputIcon: Icon(Boxicons.bx_user),
               ),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: false,
-                hint: "E-mail address",
+                hint: "email",
                 inputIcon: Icon(Boxicons.bx_envelope),
               ),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: TextFieldPrimary(
                 visible: true,
-                hint: "Password",
-                inputIcon: const Icon(Boxicons.bx_lock_alt),
+                hint: "password",
+                inputIcon: Icon(Boxicons.bx_lock_alt),
               ),
             ),
             15.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Text(
-                "By clicking on Register, you agree to our privacy policy, our terms of use",
+                "byclickingprivacy",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.sp, 
                   color: Colors.black,
                 ),
-              ),
+              ).tr(),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 onpress: () {
                   Get.to(
-                    () => const PhoneScreen(),
+                    () => PhoneScreen(),
 
                   );
                 },
-                text: 'Register',
+                text: 'signup',
               ),
             ),
             20.verticalSpace,
@@ -136,25 +120,25 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "You already have an account ?",
+                  "",
                   style: TextStyle(
                     fontSize: 15.sp,  
                     color: Colors.black,
                   ),
-                ),
+                ).tr(),
                 5.horizontalSpace,
                 InkWell(
                   onTap: () {
                     Get.back();
                   },
                   child: Text(
-                    'Login',
+                    'login',
                     style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
-                      color: primary,
+                      color: primaryColor,
                     ),
-                  ),
+                  ).tr(),
                 ),
               ],
             ), 

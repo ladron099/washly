@@ -1,12 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:washly/components/buttons.dart';
-import 'package:washly/components/vars.dart';
-
-import 'loginScreen.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:washly/utils/buttons.dart';
+import 'package:washly/views/screens/login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -22,45 +20,35 @@ class WelcomeScreen extends StatelessWidget {
           Container(
               height: 66.h,
               child: Center(
-                child:
-                    const Image(image: AssetImage('assets/images/rlogo.png')),
+                child: Image(image: AssetImage('assets/images/rlogo.png')),
               )),
           41.verticalSpace,
-          Container(
-              child: Center(
+          Center(
             child:
                 const Image(image: AssetImage('assets/images/splashback.png')),
-          )),
+          ),
           70.verticalSpace,
           Center(
             child: Text(
-              'Clean Your Car',
+              'cleanyourcar',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
-            ),
-          ),
-          3.verticalSpace,
-          Center(
-            child: Text(
-              'Right Now',
-              style: TextStyle(
-                fontSize: 30.sp,
-                 color: Colors.black,
-              ),
-            ),
+            ).tr(),
           ),
           23.verticalSpace,
-        Padding(
-          padding:   EdgeInsets.symmetric(horizontal: 54.w),
-          child: PrimaryButton(onpress: (){
-
-            Get.to(()=> const LoginScreen());
-          }, text: "Get Started"),
-        )
-            
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 54.w),
+            child: PrimaryButton(
+                onpress: () async {
+                   await GetStorage().write("isFirstTime", true);
+                  Get.to(()=> LoginScreen());
+                },
+                text: "getstarted"),
+          )
         ],
       ),
     );

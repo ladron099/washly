@@ -1,20 +1,14 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as u;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:washly/components/buttons.dart';
-import 'package:washly/components/vars.dart';
-import 'package:washly/views/verifyPhoneScreen.dart';
-
-import '../components/input.dart';
+import 'package:washly/utils/buttons.dart';
+import 'package:washly/utils/constants.dart';
+import 'package:washly/views/screens/verify_phone_number.dart';
 
 class PhoneScreen extends StatelessWidget {
   const PhoneScreen({super.key});
@@ -23,30 +17,31 @@ class PhoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: AppBar(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
         backgroundColor: Colors.white,
-         elevation: 0, 
+        elevation: 0,
         leading: IconButton(
           icon: Icon(
             Boxicons.bx_left_arrow_alt,
             size: 26.w,
-            color: primary,
+            color: primaryColor,
           ),
           onPressed: () {
             Get.back();
           },
-        ),),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            80.verticalSpace,
+            82.verticalSpace,
             Container(
                 height: 66.h,
                 child: Center(
-                  child:
-                      const Image(image: AssetImage('assets/images/rlogo.png')),
+                  child: Image(image: AssetImage('assets/images/rlogo.png')),
                 )),
             40.verticalSpace,
             Center(
@@ -64,16 +59,16 @@ class PhoneScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 83.w),
               child: Center(
                 child: Text(
-                  'Enter your phone number to send you a verification code',
+                  'enterphonenumber',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15.sp, 
+                    fontSize: 15.sp,
                     color: Colors.black,
                   ),
-                ),
+                ).tr(),
               ),
             ),
-            15.verticalSpace,
+            29.verticalSpace,
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: SizedBox(
@@ -86,10 +81,18 @@ class PhoneScreen extends StatelessWidget {
                     LengthLimitingTextInputFormatter(9),
                   ],
                   style: TextStyle(
-                    fontSize: 15.sp, 
+                    fontSize: 15.sp,
                     color: Colors.black,
                   ),
                   decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: borderGreyColor),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.r),
+                      borderSide: BorderSide(color: primaryColor),
+                    ),
                     prefixIcon: CountryCodePicker(
                       onChanged: (CountryCode countryCode) {},
                       initialSelection: 'MA',
@@ -98,56 +101,51 @@ class PhoneScreen extends StatelessWidget {
                       showOnlyCountryWhenClosed: false,
                       alignLeft: false,
                       textStyle: TextStyle(
-                        fontSize: 15.sp, 
+                        fontSize: 15.sp,
                         color: Colors.black,
                       ),
                       flagWidth: 25.w,
                     ),
-                    hintText: 'Phone number',
+                    hintText: u.tr("phone"),
                     hintStyle: TextStyle(
-                      fontSize: 15.sp, 
-                      color: borderGrey,
+                      fontSize: 15.sp,
+                      color: borderGreyColor,
                     ),
                     filled: true,
                     fillColor: Colors.transparent,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: primary, width: 2),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
                     border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: borderGrey, width: 2),
+                      borderSide: BorderSide(color: borderGreyColor, width: 2),
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
                 ),
               ),
             ),
-            20.verticalSpace,
+            10.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Text(
-                "Washly will never share your number with other companies or use it for marketing purposes.",
+                "washlywillnever",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 15.sp, 
+                  fontSize: 15.sp,
                   color: Colors.black,
                 ),
-              ),
+              ).tr(),
             ),
             20.verticalSpace,
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 onpress: () {
                   Get.to(
-                    () => const VerifyPhoneScreen(),
+                    () => VerifyPhoneScreen(),
                   );
                 },
-                text: 'Next',
+                text: 'next',
               ),
             ),
             20.verticalSpace,
-             
           ],
         ),
       ),
