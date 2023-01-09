@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/services.dart';
 import 'package:washly/views/screens/help_screen.dart';
+import 'package:washly/views/screens/login_screen.dart';
 import 'package:washly/views/screens/orders_screen.dart';
 import 'package:washly/views/screens/profile_screen.dart';
 import 'package:washly/views/screens/transactions_screen.dart';
@@ -88,11 +89,24 @@ class CustomDrawer extends StatelessWidget {
                           },
                         ),
                         DrawerItem(
-                          title: 'transactions',
-                          icon: Boxicons.bx_transfer_alt,
+                          title: 'cars',
+                          icon: Boxicons.bx_car,
                           onTap: () {
                             Get.back();
-                            goTo(TransactionsScreen());
+                          },
+                        ),
+                        DrawerItem(
+                          title: 'wallet',
+                          icon: Boxicons.bx_wallet,
+                          onTap: () {
+                            Get.back();
+                          },
+                        ),
+                        DrawerItem(
+                          title: 'sharewithfriends',
+                          icon: Boxicons.bx_share_alt,
+                          onTap: () {
+                            Get.back();
                           },
                         ),
                         DrawerItem(
@@ -100,7 +114,6 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_help_circle,
                           onTap: () {
                              Get.back();
-                            goTo( HelpScreen  ());
                           },
                         ),
                         
@@ -111,7 +124,9 @@ class CustomDrawer extends StatelessWidget {
                       child: DrawerItem(
                           title: 'logout',
                           icon: Boxicons.bx_log_out,
-                          onTap: () {},
+                          onTap: () {
+                            Get.offAll(()=>LoginScreen(), transition: Transition.rightToLeft);
+                          },
                         ),
                     ),
                   ],

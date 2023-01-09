@@ -1,6 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
+import 'package:washly/views/screens/home_screen.dart';
 
 class CongratsScreen extends StatelessWidget {
   const CongratsScreen({super.key});
@@ -23,27 +27,28 @@ class CongratsScreen extends StatelessWidget {
             child: Image(image: AssetImage('assets/images/waitingback.png')),
           ),
           38.verticalSpace,
-          Center(
-            child: Text(
-              'Request Sent successfully',
-              style: TextStyle(
-                fontSize: 30.sp,
-                fontWeight: FontWeight.bold,
-                color: secondaryColor,
-              ),
+          Center( 
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 60.w),
+              child: Text(
+                'wearehappy',
+                textAlign: TextAlign.center ,
+                style: TextStyle(
+                  fontSize: 30.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ).tr(),
             ),
           ),
           31.verticalSpace,
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 45.w),
-            child: Text(
-              'Your request has been sent successfully, we will verify your request in 30 days maximum.',
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.black,
-              ),
-            ),
-          ),
+              padding: EdgeInsets.symmetric(horizontal: 45.w),
+              child: PrimaryButton(
+                  text: "next",
+                  onpress: () {
+                    Get.to(() => HomeScreen(), transition: Transition.rightToLeft);
+                            })),
           23.verticalSpace,
         ],
       ),

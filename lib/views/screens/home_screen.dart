@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:washly/utils/models/order.dart';
 import 'package:washly/utils/services.dart';
+import 'package:washly/utils/static_orders.dart';
 import 'package:washly/views/components/drawer.dart';
 import 'package:washly/views/components/widgets.dart';
 
@@ -28,17 +30,34 @@ class HomeScreen extends StatelessWidget {
             behavior: MyBehavior(),
             child: SingleChildScrollView(
               child: HomeWidget(
-                  widget: ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => OrderWidget(
-                            distance: 7,
-                            name: "Abdessamad Berahhou",
-                            imagePath: "assets/images/profile.png",
-                            orderType: "Standard",
-                          ),
-                      separatorBuilder: (context, index) => 15.verticalSpace,
-                      itemCount: 5)),
+                  widget: Column(
+                children: [
+                  InputDecorator(
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
+                    child: DropdownButtonHideUnderline(
+                        child: DropdownButton<Order>(
+                      onChanged: (newValue) {},
+                      value: orders[0],
+                      items: orders.map<DropdownMenuItem<Order>>((Order value) {
+                        return DropdownMenuItem<Order>(
+                          value: value,
+                          child: Container(
+                              width: 270.w,
+                              height: 50.h,
+                              margin: EdgeInsets.only(bottom: 5.h),
+                              child: Row(
+                                children: [
+                                  Image.asset(value.orderCar!.carPicture!),
+                                  15.horizontalSpace,
+                                  Text(value.orderCar!.carName!)
+                              ],)),
+                        );
+                      }).toList(),
+                    )),
+                  ),
+                ],
+              )),
             ),
           ),
         ),

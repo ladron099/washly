@@ -7,7 +7,7 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/widgets.dart';
-import 'package:washly/views/screens/identity_screen.dart';
+import 'package:washly/views/screens/congrats_screen.dart';
 
 class VerifyPhoneScreen extends StatelessWidget {
   const VerifyPhoneScreen({super.key});
@@ -80,7 +80,7 @@ class VerifyPhoneScreen extends StatelessWidget {
               child: PrimaryButton(
                 onpress: () {
                   Get.to(
-                    () => IdentityScreen(),
+                    () => CongratsScreen(),
                   );
                 },
                 text: u.tr('verify'),
