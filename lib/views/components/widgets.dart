@@ -352,7 +352,9 @@ class FilterWidget extends StatelessWidget {
   int? selected;
   int? index;
   VoidCallback? onPress;
-  FilterWidget({Key? key, this.selected, this.index, this.text, this.onPress})
+  bool hasSize;
+  double? width;
+  FilterWidget({Key? key, this.selected, this.index, this.text, this.onPress, this.width, this.hasSize = false})
       : super(key: key);
 
   @override
@@ -362,7 +364,7 @@ class FilterWidget extends StatelessWidget {
         onPress!();
       },
       child: Container(
-        width: 80.w,
+        width: hasSize ? width: 80.w,
         height: 33.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
