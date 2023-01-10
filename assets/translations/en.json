@@ -108,6 +108,12 @@
     "cash":"Cash",
     "card":"Credit Card",
     "washlycoint":"WashlyCoin",
-    "iwillbepresent":"I will be present in person at the location"
+    "iwillbepresent":"I will be present in person at the location",
+    "invitefriends":"Invite friends",
+    "earn":"Earn 40 MAD at a time!",
+    "sharecode":"Share code",
+    "howitworks":"How it works",
+    "shareyourcode":"Share your code with friends and they'll each get 20 MAD to spen acros 3 orders",
+    "earntwenty":"Earn 25 MAD to spend in Washly for every friend that places their 1st order."
 
 }                      
