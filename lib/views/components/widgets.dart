@@ -15,10 +15,12 @@ class TextFieldPrimary extends StatelessWidget {
   String hint;
   Icon inputIcon;
   bool visible;
+  TextEditingController? controller;
   TextFieldPrimary({
     required this.hint,
     required this.inputIcon,
     required this.visible,
+      this.controller,
     Key? key,
   }) : super(key: key);
 
@@ -27,6 +29,7 @@ class TextFieldPrimary extends StatelessWidget {
     return Container(
       height: 50.h,
       child: TextField(
+        controller: controller,
         obscureText: visible,
         decoration: InputDecoration(
           hintText: u.tr(hint),

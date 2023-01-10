@@ -61,6 +61,8 @@
     "ordercanceled":"Order canceled",
     "address":"Address",
     "service":"Service",
+    "services":"Services",
+    "chooseyourservice":"Choose your service",
     "paymentdetails":"Payment details",
     "paymentmethod":"Payment method",
     "subtotal":"Subtotal",
@@ -90,5 +92,22 @@
     "wearehappy":"We are happy you join us",
     "cars":"Cars",
     "wallet":"Wallet",
-    "sharewithfriends":"Share with friends"                         
+    "sharewithfriends":"Share with friends",
+    "currentlocation":"Current location",
+    "choosecurrentlocation":"Choose your current location",
+    "savedlocations":"Saved locations",
+    "choosepreviouslocation":"Choose previous location",
+    "addnewlocation":"Add new location",
+    "newlocation":"New location",
+    "completeaddress":"Complete your address",
+    "back":"Back",
+    "savedaddress":"Saved address",
+    "addresses":"Addresses", 
+    "reviewandchekout":"Review and check out",
+    "coupon":"Coupon code",
+    "cash":"Cash",
+    "card":"Credit Card",
+    "washlycoint":"WashlyCoin",
+    "iwillbepresent":"I will be present in person at the location"
+
 }                      

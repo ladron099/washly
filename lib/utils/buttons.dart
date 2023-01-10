@@ -53,7 +53,7 @@ class PrimaryButton extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 17.sp,
-              color: reverse ? color : Colors.white,
+              color: reverse ? color : color==Colors.white? primaryColor:Colors.white,
             ),
           ).tr(),
         ],
