@@ -9,11 +9,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/services.dart';
+import 'package:washly/views/screens/choose_car_screen.dart';
 import 'package:washly/views/screens/help_screen.dart';
 import 'package:washly/views/screens/login_screen.dart';
 import 'package:washly/views/screens/orders_screen.dart';
 import 'package:washly/views/screens/profile_screen.dart';
+import 'package:washly/views/screens/share_with_friends_screen.dart';
 import 'package:washly/views/screens/transactions_screen.dart';
+import 'package:washly/views/screens/wallet_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({Key? key}) : super(key: key);
@@ -77,7 +80,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_package,
                           onTap: () {
                             Get.back();
-                            goTo(OrdersScreen());
+                            Get.to(() => OrdersScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         DrawerItem(
@@ -85,7 +88,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_user,
                           onTap: () {
                             Get.back();
-                            goTo( ProfileScreen());
+                            Get.to(() =>  ProfileScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         DrawerItem(
@@ -93,6 +96,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_car,
                           onTap: () {
                             Get.back();
+                            Get.to(() =>  ChooseCarScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         DrawerItem(
@@ -100,6 +104,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_wallet,
                           onTap: () {
                             Get.back();
+                            Get.to(() =>  WalletScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         DrawerItem(
@@ -107,6 +112,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_share_alt,
                           onTap: () {
                             Get.back();
+                            Get.to(() =>  ShareWithFriendsScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         DrawerItem(
@@ -114,6 +120,7 @@ class CustomDrawer extends StatelessWidget {
                           icon: Boxicons.bx_help_circle,
                           onTap: () {
                              Get.back();
+                             Get.to(() =>  HelpScreen(), transition: Transition.rightToLeft);
                           },
                         ),
                         

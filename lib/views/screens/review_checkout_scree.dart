@@ -8,11 +8,13 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/widgets.dart';
+import 'package:washly/views/screens/on_road_order_screen.dart';
 
 import '../../controllers/completeOrderController.dart';
 import '../../controllers/reviewCheckoutController.dart';
 import '../../utils/buttons.dart';
 import '../../utils/services.dart';
+import 'searching_scrubber_screen.dart';
 
 class ReviewCheckOutScreen extends StatelessWidget {
   const ReviewCheckOutScreen({super.key});
@@ -21,9 +23,9 @@ class ReviewCheckOutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-        appBar: CustomAppBar(
-            hasTitle: true, title: "payment", subTitle: "reviewandchekout"),
-            body: GetBuilder<ReviewCheckOutController>(
+      appBar: CustomAppBar(
+          hasTitle: true, title: "payment", subTitle: "reviewandchekout"),
+      body: GetBuilder<ReviewCheckOutController>(
           init: ReviewCheckOutController(),
           builder: (controller) {
             return ScrollConfiguration(
@@ -32,8 +34,6 @@ class ReviewCheckOutScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     22.verticalSpace,
-                  
-                    
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CarWidget(
@@ -158,9 +158,7 @@ class ReviewCheckOutScreen extends StatelessWidget {
                                 "15.00 MAD Discount",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 15.sp,
-                                  color: secondaryColor
-                                ),
+                                    fontSize: 15.sp, color: secondaryColor),
                               ),
                             ],
                           ),
@@ -326,7 +324,8 @@ class ReviewCheckOutScreen extends StatelessWidget {
                                         text: "done",
                                         color: secondaryColor,
                                         onpress: () {
-                                         
+                                          Get.to(() => SearchingScrubberScreen(),
+                            transition: Transition.rightToLeft);
                                         })),
                                 26.verticalSpace,
                               ],
@@ -340,7 +339,6 @@ class ReviewCheckOutScreen extends StatelessWidget {
               ),
             );
           }),
-  
     );
   }
 }

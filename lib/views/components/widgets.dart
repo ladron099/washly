@@ -7,20 +7,20 @@ import 'package:washly/utils/constants.dart';
 import 'package:easy_localization/easy_localization.dart' as u;
 import 'package:washly/utils/models/list_item.dart';
 import 'package:washly/utils/models/order.dart';
-import 'package:washly/utils/services.dart';
-import 'package:washly/views/screens/order_details_screen.dart';
 import 'package:washly/views/screens/order_history_detail_screen.dart';
 
 class TextFieldPrimary extends StatelessWidget {
   String hint;
-  Icon inputIcon;
+  Icon?  inputIcon;
   bool visible;
+  bool hasIcon;
   TextEditingController? controller;
   TextFieldPrimary({
     required this.hint,
-    required this.inputIcon,
+    this.inputIcon,
     required this.visible,
-      this.controller,
+    this.hasIcon = true,
+    this.controller,
     Key? key,
   }) : super(key: key);
 
@@ -37,7 +37,7 @@ class TextFieldPrimary extends StatelessWidget {
             fontSize: 14.sp,
             color: Colors.grey,
           ),
-          prefixIcon: inputIcon,
+          prefixIcon: hasIcon ? inputIcon : null,
           filled: true,
           fillColor: Colors.white,
           enabledBorder: OutlineInputBorder(
@@ -208,9 +208,7 @@ class OrderWidget extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: PrimaryButton(
                     text: "vieworder",
-                    onpress: () {
-                      goTo(OrderDetailScreen());
-                    },
+                    onpress: () {},
                     size: Size(150, 40),
                   ),
                 )
@@ -354,7 +352,14 @@ class FilterWidget extends StatelessWidget {
   VoidCallback? onPress;
   bool hasSize;
   double? width;
-  FilterWidget({Key? key, this.selected, this.index, this.text, this.onPress, this.width, this.hasSize = false})
+  FilterWidget(
+      {Key? key,
+      this.selected,
+      this.index,
+      this.text,
+      this.onPress,
+      this.width,
+      this.hasSize = false})
       : super(key: key);
 
   @override
@@ -364,7 +369,7 @@ class FilterWidget extends StatelessWidget {
         onPress!();
       },
       child: Container(
-        width: hasSize ? width: 80.w,
+        width: hasSize ? width : 80.w,
         height: 33.h,
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -588,7 +593,6 @@ class CarWidget extends StatelessWidget {
   }
 }
 
-
 class DropDownMenu extends StatefulWidget {
   List<DropdownMenuItem<ListItem>>? items;
   ListItem? listItem;
@@ -604,6 +608,7 @@ class DropDownMenu extends StatefulWidget {
   @override
   State<DropDownMenu> createState() => _DropDownMenuState();
 }
+
 class _DropDownMenuState extends State<DropDownMenu> {
   @override
   Widget build(BuildContext context) {
@@ -626,7 +631,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
                 child: DropdownButton<ListItem>(
                   value: widget.listItem,
                   items: widget.items,
-                  style: TextStyle(fontSize: 16,color: borderGreyColor),
+                  style: TextStyle(fontSize: 16, color: borderGreyColor),
                   iconSize: 20,
                   icon: const Icon(
                     Boxicons.bx_chevron_down,
@@ -644,8 +649,6 @@ class _DropDownMenuState extends State<DropDownMenu> {
     );
   }
 }
-
-
 
 class InputDatePicker extends StatefulWidget {
   String dateText;
@@ -684,13 +687,46 @@ class _InputDatePickerState extends State<InputDatePicker> {
                 color: Colors.grey,
               ),
               10.horizontalSpace,
-              Text(
-                widget.dateText,
-                style: TextStyle(fontSize: 16.sp, color: Colors.grey)),
+              Text(widget.dateText,
+                  style: TextStyle(fontSize: 16.sp, color: Colors.grey)),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class ProgressWidget extends StatelessWidget {
+  String? text;
+  int? index;
+  bool? filled;
+  ProgressWidget({
+    this.text,
+    this.index,
+    this.filled,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 90.w,
+          height: 8.h,
+          decoration: BoxDecoration(
+              color: filled! ? primaryColor : primaryColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(50)),
+        ),
+        5.verticalSpace,
+        Text(
+          '$index. ${u.tr("$text")}',
+          style: TextStyle(fontSize: 14.sp),
+        )
+      ],
     );
   }
 }

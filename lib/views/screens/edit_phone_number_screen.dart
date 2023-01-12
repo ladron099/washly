@@ -2,13 +2,13 @@
 
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/widgets.dart';
+import 'package:washly/views/screens/reverify_phone_number.dart';
 
 import '../../utils/buttons.dart';
 import '../../utils/services.dart';
@@ -22,8 +22,8 @@ class ChangePhoneNumberScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: CustomAppBar(
             hasTitle: true,
-            title: 'changepassword'.tr(),
-            subTitle: "changepassword".tr()),
+            title: 'changepassword',
+            subTitle: "changepassword"),
         body: Container(
             width: 375.w,
             padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -85,7 +85,7 @@ class ChangePhoneNumberScreen extends StatelessWidget {
                       ),
                       flagWidth: 25.w,
                     ),
-                    hintText: "phone".tr(),
+                    hintText: "phone",
                     hintStyle: TextStyle(
                       fontSize: 15.sp,
                       color: borderGreyColor,
@@ -117,7 +117,7 @@ class ChangePhoneNumberScreen extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: PrimaryButton(
                 onpress: () {
-                  
+                  Get.to(() => ReverifyPhoneScreen(), transition: Transition.rightToLeft);
                 },
                 text: 'save',
               ),

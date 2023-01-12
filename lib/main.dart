@@ -6,11 +6,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/services.dart';
-import 'package:washly/views/screens/complete_order_screen.dart';
-import 'package:washly/views/screens/enter_address_screen.dart';
-import 'package:washly/views/screens/services_screen.dart';
-import 'package:washly/views/screens/share_with_friends_screen.dart';
-import 'package:washly/views/screens/wallet_screen.dart'; 
 
 void main() async {
   await GetStorage.init();
@@ -42,7 +37,7 @@ void main() async {
                 ),
             primaryColor: primaryColor,
           ),
-          home: WalletScreen(),
+          home: main,
         );
       },
     ),

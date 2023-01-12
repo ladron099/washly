@@ -20,6 +20,9 @@ class StartCommandController extends GetxController{
   Order? order;
   Completer<GoogleMapController> mapController = Completer();
   RxBool loading = false.obs;
+  bool filled2 = false;
+  bool filled3 = false;
+  int step = 1;
 
   
  getUserLocation() async {
@@ -71,6 +74,17 @@ class StartCommandController extends GetxController{
       );
   }
 
+  next() {
+    if(step == 1){
+      filled2 = true;
+      step += 1;
+    }
+    else if(step == 2){
+      filled3 = true;
+      step += 1;
+    }
+    update();
+  }
 
   @override
   void onInit() {
