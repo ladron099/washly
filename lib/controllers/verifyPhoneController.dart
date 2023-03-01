@@ -64,14 +64,14 @@ class VerifyPhoneController extends GetxController {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: code.text);
 
-        AuthCredential emailCredential = EmailAuthProvider.credential(
-          email: tmpUser!.email,
-          password: tmpUser!.password,
-        );
-        UserCredential authResult =
-            await FirebaseAuth.instance.signInWithCredential(credential);
+        // AuthCredential emailCredential = EmailAuthProvider.credential(
+        //   email: tmpUser!.email,
+        //   password: tmpUser!.password,
+        // );
+        // UserCredential authResult =
+        //     await FirebaseAuth.instance.signInWithCredential(credential);
         User? user = FirebaseAuth.instance.currentUser;
-        user!.linkWithCredential(emailCredential).then((value) async {
+        user!.linkWithCredential(credential).then((value) async {
           Client userBase = Client(
               client_uid: user.uid,
               client_full_name: '',
@@ -112,6 +112,7 @@ class VerifyPhoneController extends GetxController {
         });
         print(tmpUser!.email);
       } catch (e) {
+        print(e.toString());
         showAlertDialogOneButton(
             context, "Code requis", "Veuillez entrer le bon code.", "Ok");
         loading.toggle();
