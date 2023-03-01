@@ -16,14 +16,14 @@ Future<String> isUserExist(email) async {
   });
 
   await FirebaseFirestore.instance
-      .collection('drivers')
-      .where('driver_email', isEqualTo: email)
+      .collection('washers')
+      .where('washer_email', isEqualTo: email)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    if (value.size != 0) provider = documentSnapshot[0]['driver_type_auth'];
+    if (value.size != 0) provider = documentSnapshot[0]['washer_type_auth'];
   });
 
   return provider;
@@ -82,9 +82,9 @@ Future<bool> getUserStatus(phone) async {
   bool isVerified = false;
   await FirebaseFirestore.instance
       .collection('users')
-      .where('customer_phone_number', isEqualTo: phone)
+      .where('client_phone_number', isEqualTo: phone)
       .where('is_deleted_account', isEqualTo: false)
-      .where('customer_auth_type', isEqualTo: 'Phone')
+      .where('client_auth_type', isEqualTo: 'Phone')
       .snapshots()
       .first
       .then((value) {
@@ -100,9 +100,9 @@ Future<String> checkPhoneNumber(phoneNo) async {
   String message = "not-found";
 
   await FirebaseFirestore.instance
-      .collection('drivers')
-      .where('driver_phone_number', isEqualTo: phoneNo)
-      .where('driver_type_auth', whereIn: ["Phone", "Facebook", "Google"])
+      .collection('washers')
+      .where('washer_phone_number', isEqualTo: phoneNo)
+      .where('washer_type_auth', whereIn: ["Phone", "Facebook", "Google"])
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
@@ -112,8 +112,8 @@ Future<String> checkPhoneNumber(phoneNo) async {
 
   await FirebaseFirestore.instance
       .collection('users')
-      .where('customer_phone_number', isEqualTo: phoneNo)
-      .where('customer_auth_type', whereIn: ["Phone", "Facebook", "Google"])
+      .where('client_phone_number', isEqualTo: phoneNo)
+      .where('client_auth_type', whereIn: ["Phone", "Facebook", "Google"])
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first

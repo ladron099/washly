@@ -70,9 +70,9 @@ Future createUser(Client user) async {
 Future<String> getUserFrom(uid, type) async {
   String message = "new-account";
   await FirebaseFirestore.instance
-      .collection('drivers')
-      .where('driver_email', isEqualTo: uid)
-      .where('driver_type_auth', isEqualTo: type)
+      .collection('washers')
+      .where('washer_email', isEqualTo: uid)
+      .where('washer_type_auth', isEqualTo: type)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
@@ -81,8 +81,8 @@ Future<String> getUserFrom(uid, type) async {
   });
   await FirebaseFirestore.instance
       .collection('users')
-      .where('customer_email', isEqualTo: uid)
-      .where('customer_auth_type', isEqualTo: type)
+      .where('client_email', isEqualTo: uid)
+      .where('client_auth_type', isEqualTo: type)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first

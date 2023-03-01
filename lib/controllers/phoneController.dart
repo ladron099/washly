@@ -22,7 +22,7 @@ class PhoneController extends GetxController {
   }
 
   submit(context) async {
-    // if(userBase!.customer_phone_number.isNotEmpty){
+    // if(userBase!.client_phone_number.isNotEmpty){
 
     // }
     if (phone.text.isEmpty || phone.text.length < 9) {
