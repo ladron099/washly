@@ -28,9 +28,10 @@ class TextFieldPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50.h,
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: visible,
+        validator: ,
         decoration: InputDecoration(
           hintText: u.tr(hint),
           hintStyle: TextStyle(

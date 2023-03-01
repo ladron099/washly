@@ -63,14 +63,16 @@ class VerifyPhoneController extends GetxController {
       try {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: code.text);
-        AuthCredential emailCredential = EmailAuthProvider.credential(
-          email: tmpUser!.email,
-          password: tmpUser!.password,
-        );
-        UserCredential authResult =
-            await FirebaseAuth.instance.signInWithCredential(credential);
-        User? user = authResult.user;
-        user!.linkWithCredential(emailCredential).then((value) async {
+        // AuthCredential emailCredential = EmailAuthProvider.credential(
+        //   email: tmpUser!.email,
+        //   password: tmpUser!.password,
+        // );
+        // UserCredential authResult =
+        //     await FirebaseAuth.instance.signInWithCredential(credential);
+        // User? user = authResult.user;
+        User? user = FirebaseAuth.instance.currentUser; 
+        print(user!.uid);
+        user.linkWithCredential(credential).then((value) async {
           Client userBase = Client(
             client_uid: user.uid,
             client_full_name: '',
@@ -127,6 +129,7 @@ class VerifyPhoneController extends GetxController {
     super.onInit();
     tmpUser = TmpUser.fromJson(await SessionManager().get('tmpUser'));
     verificationCode = Get.arguments;
+    print(verificationCode);
     isTrue = false.obs;
     startTimer();
     update();
