@@ -15,7 +15,7 @@ import 'package:washly/views/screens/congrats_screen.dart';
 class VerifyPhoneController extends GetxController {
   TextEditingController code = TextEditingController();
   RxBool loading = false.obs, isTrue = true.obs;
-  TmpUser? tmpUser;
+  TmpUser tmpUser = TmpUser.fromClient();
   int second = 30;
   String message = '', verificationCode = '';
 
@@ -63,42 +63,49 @@ class VerifyPhoneController extends GetxController {
       try {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: code.text);
-
         // AuthCredential emailCredential = EmailAuthProvider.credential(
         //   email: tmpUser!.email,
         //   password: tmpUser!.password,
         // );
         // UserCredential authResult =
         //     await FirebaseAuth.instance.signInWithCredential(credential);
-        User? user = FirebaseAuth.instance.currentUser;
-        user!.linkWithCredential(credential).then((value) async {
-          Client userBase = Client(
-              client_uid: user.uid,
-              client_full_name: '',
-              client_email: tmpUser!.email,
-              client_phone_number: tmpUser!.phoneNo,
-              client_picture:
-                  'https://firebasestorage.googleapis.com/v0/b/motopickup-353120.appspot.com/o/user-images%2F150-1503945_transparent-user-png-default-user-image-png-png.png?alt=media&token=46482c39-d266-41b4-ab98-98e7d6521842',
-              client_date_naissance: '',
-              client_sexe: '',
-              client_auth_type: 'Phone',
-              is_activated_account: false,
-              client_cancelled_delivery: 0,
-              client_succeded_delivery: 0,
-              client_planned_delivery: 0,
-              client_stars_mean: 0,
-              client_note: 0,
-              client_last_order_state: false,
-              client_last_login_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                  .format(DateTime.now()),
-              client_registration_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                  .format(DateTime.now()),
-              is_deleted_account: false,
-              is_verified_account: false,
-              client_city: '',
-              client_longitude: 0,
-              client_latitude: 0,
-              client_total_orders: 0);
+        // User? user = authResult.user;
+        User? user = FirebaseAuth.instance.currentUser; 
+        print(user!.uid);
+        user.linkWithCredential(credential).then((value) async {
+          // Client userBase = Client(
+          //     client_uid: user.uid,
+          //     client_full_name: user.displayName!,
+          //     client_email: tmpUser!.email,
+          //     client_phone_number: tmpUser!.phoneNo,
+          //     client_picture:
+          //         'https://firebasestorage.googleapis.com/v0/b/motopickup-353120.appspot.com/o/user-images%2F150-1503945_transparent-user-png-default-user-image-png-png.png?alt=media&token=46482c39-d266-41b4-ab98-98e7d6521842',
+          //     client_date_naissance: '',
+          //     client_sexe: '',
+          //     client_auth_type: 'Google',
+          //     is_activated_account: false,
+          //     client_cancelled_delivery: 0,
+          //     client_succeded_delivery: 0,
+          //     client_planned_delivery: 0,
+          //     client_stars_mean: 0,
+          //     client_note: 0,
+          //     client_last_order_state: false,
+          //     client_last_login_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+          //         .format(DateTime.now()),
+          //     client_registration_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+          //         .format(DateTime.now()),
+          //     is_deleted_account: false,
+          //     is_verified_account: false,
+          //     client_city: '',
+          //     client_longitude: 0,
+          //     client_latitude: 0,
+          //     client_total_orders: 0);
+          TmpUser tmpUser = TmpUser.fromJson(await SessionManager().get("tmpUser"));
+          Client userBase = Client.fromJson(await SessionManager().get('currentUser'));
+          userBase.is_activated_account = true;
+          userBase.is_verified_account = true;
+          userBase.client_phone_number = tmpUser.phoneNo!;
+          GetStorage().write('user_status', 'verified');
           GetStorage().write('isLoggedIn', true);
           await SessionManager().set('currentUser', userBase);
           await createUser(userBase).then(
@@ -112,7 +119,6 @@ class VerifyPhoneController extends GetxController {
         });
         print(tmpUser!.email);
       } catch (e) {
-        print(e.toString());
         showAlertDialogOneButton(
             context, "Code requis", "Veuillez entrer le bon code.", "Ok");
         loading.toggle();
@@ -128,6 +134,7 @@ class VerifyPhoneController extends GetxController {
   void onInit() async {
     super.onInit();
     tmpUser = TmpUser.fromJson(await SessionManager().get('tmpUser'));
+    print(tmpUser!.toJson());
     verificationCode = Get.arguments;
     isTrue = false.obs;
     startTimer();

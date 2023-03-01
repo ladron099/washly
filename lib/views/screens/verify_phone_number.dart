@@ -59,7 +59,7 @@ class VerifyPhoneScreen extends StatelessWidget {
                             color: Colors.black,
                           ),
                         ).tr(),
-                        Text("+212 695 999 333")
+                        Text(controller.tmpUser.phoneNo ?? '')
                       ],
                     ),
                   ),

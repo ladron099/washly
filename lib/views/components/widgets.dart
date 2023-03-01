@@ -15,12 +15,14 @@ class TextFieldPrimary extends StatelessWidget {
   bool visible;
   bool hasIcon;
   TextEditingController? controller;
+  String? Function(String?)? validator;
   TextFieldPrimary({
     required this.hint,
     this.inputIcon,
     required this.visible,
     this.hasIcon = true,
     this.controller,
+    this.validator,
     Key? key,
   }) : super(key: key);
 
@@ -28,9 +30,10 @@ class TextFieldPrimary extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50.h,
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: visible,
+        validator: validator,
         decoration: InputDecoration(
           hintText: u.tr(hint),
           hintStyle: TextStyle(

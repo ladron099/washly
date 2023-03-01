@@ -19,13 +19,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(
-        () {
-          return LoadingScreen(
-            loading: controller.loading.value,
-            child: SingleChildScrollView(
+      body: Obx(() {
+        return LoadingScreen(
+          loading: controller.loading.value,
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -34,8 +36,8 @@ class LoginScreen extends StatelessWidget {
                   Container(
                       height: 62.h,
                       child: Center(
-                        child:
-                            const Image(image: AssetImage('assets/images/rlogo.png')),
+                        child: const Image(
+                            image: AssetImage('assets/images/rlogo.png')),
                       )),
                   40.verticalSpace,
                   Center(
@@ -56,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                         'enteraccountinfo',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 15.sp, 
+                          fontSize: 15.sp,
                           color: Colors.black,
                         ),
                       ).tr(),
@@ -69,6 +71,7 @@ class LoginScreen extends StatelessWidget {
                       visible: false,
                       hint: "email",
                       inputIcon: Icon(Boxicons.bx_envelope),
+                      validator: (text) {},
                     ),
                   ),
                   25.verticalSpace,
@@ -93,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                           child: Text(
                             'forgetpassword',
                             style: TextStyle(
-                              fontSize: 15.sp, 
+                              fontSize: 15.sp,
                               color: primaryColor,
                             ),
                           ).tr(),
@@ -106,8 +109,11 @@ class LoginScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: PrimaryButton(
                       onpress: () async {
-                        await GetStorage().write("isLogedIn", true);
-                        Get.to(()=> HomeScreen(), transition: Transition.rightToLeft);
+                        if (formKey.currentState!.validate()) {
+                          await GetStorage().write("isLogedIn", true);
+                          Get.to(() => HomeScreen(),
+                              transition: Transition.rightToLeft);
+                        }
                       },
                       text: 'login',
                     ),
@@ -156,7 +162,7 @@ class LoginScreen extends StatelessWidget {
                       Text(
                         "donthaveaccount",
                         style: TextStyle(
-                          fontSize: 15.sp, 
+                          fontSize: 15.sp,
                           color: Colors.black,
                         ),
                       ).tr(),
@@ -170,7 +176,7 @@ class LoginScreen extends StatelessWidget {
                         child: Text(
                           'signup',
                           style: TextStyle(
-                            fontSize: 15.sp, 
+                            fontSize: 15.sp,
                             color: primaryColor,
                           ),
                         ).tr(),
@@ -181,9 +187,9 @@ class LoginScreen extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        }
-      ),
+          ),
+        );
+      }),
     );
   }
 }
