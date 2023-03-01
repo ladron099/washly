@@ -134,13 +134,13 @@ logoutDialog(context) => showDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(67.r))),
               onPressed: () async {
-                // String fcm = await SessionManager().get('customer_fcm');
+                // String fcm = await SessionManager().get('client_fcm');
                 await FirebaseAuth.instance.signOut();
                 await GoogleSignIn(scopes: ['profile', 'email']).signOut();
                 await SessionManager().remove("currentUser");
                 await SessionManager().destroy();
                 await GetStorage().erase();
-                // SessionManager().set('customer_fcm', fcm);
+                // SessionManager().set('client_fcm', fcm);
                 Get.offAll(() => LoginScreen(),
                     transition: Transition.rightToLeft);
                 await GetStorage().write("isFirstTime", false);
