@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810638852135",
+    "project_id": "washly-b8ab4",
+    "storage_bucket": "washly-b8ab4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810638852135:android:458680e3eb6091dab48e02",
+        "android_client_info": {
+          "package_name": "com.example.washly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810638852135-gq0jo9nndaf76lkfcgd8imoj383i1q4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC58nx2q6JW-0-Ma14gJDf5ZNpi1aLeycM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810638852135-gq0jo9nndaf76lkfcgd8imoj383i1q4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

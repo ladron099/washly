@@ -1,11 +1,8 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/review_checkout_scree.dart';

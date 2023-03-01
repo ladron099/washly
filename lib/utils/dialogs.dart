@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization.dart' as u;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/screens/home_screen.dart';
 import 'package:washly/views/screens/login_screen.dart';
@@ -98,13 +101,13 @@ exitReasonDialog(context) => showDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(67.r))),
               onPressed: () {
-                Get.offAll(() => HomeScreen(), transition: Transition.rightToLeft);
+                Get.offAll(() => HomeScreen(),
+                    transition: Transition.rightToLeft);
               },
               child: Text("yes").tr()),
         ],
       ),
     );
-
 
 logoutDialog(context) => showDialog(
       context: context,
@@ -130,15 +133,22 @@ logoutDialog(context) => showDialog(
                   backgroundColor: redColor,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(67.r))),
-              onPressed: () async  {
-                Get.offAll(() => LoginScreen(), transition: Transition.rightToLeft);
-                            await GetStorage().write("isLoggedIn", false);
+              onPressed: () async {
+                // String fcm = await SessionManager().get('customer_fcm');
+                await FirebaseAuth.instance.signOut();
+                await GoogleSignIn(scopes: ['profile', 'email']).signOut();
+                await SessionManager().remove("currentUser");
+                await SessionManager().destroy();
+                await GetStorage().erase();
+                // SessionManager().set('customer_fcm', fcm);
+                Get.offAll(() => LoginScreen(),
+                    transition: Transition.rightToLeft);
+                await GetStorage().write("isFirstTime", false);
               },
               child: Text("yes").tr()),
         ],
       ),
     );
-
 
 deletCarDialog(context) => showDialog(
       context: context,
@@ -174,12 +184,52 @@ deletCarDialog(context) => showDialog(
       ),
     );
 
+showAlertDialogOneButton(BuildContext context, title, text, btnText) {
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text(
+      btnText,
+      style: TextStyle(
+        fontSize: 14.sp,
+        color: dark,
+        height: 1.4,
+        fontFamily: "LatoRegular",
+      ),
+    ),
+    onPressed: () {
+      Get.back();
+    },
+  );
 
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      title,
+      style: TextStyle(
+        fontSize: 16.sp,
+        color: primaryColor,
+        fontFamily: "LatoSemiBold",
+      ),
+    ),
+    content: Text(
+      text,
+      style: TextStyle(
+        fontSize: 14.sp,
+        color: dark,
+        height: 1.4,
+        fontFamily: "LatoRegular",
+      ),
+    ),
+    actions: [
+      okButton,
+    ],
+  );
 
-
-
-
-
-
-
-
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}

@@ -3,19 +3,17 @@
 
 import 'package:boxicons/boxicons.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:washly/utils/constants.dart';
+import 'package:washly/utils/dialogs.dart';
 import 'package:washly/utils/services.dart';
 import 'package:washly/views/screens/choose_car_screen.dart';
 import 'package:washly/views/screens/help_screen.dart';
-import 'package:washly/views/screens/login_screen.dart';
 import 'package:washly/views/screens/orders_screen.dart';
 import 'package:washly/views/screens/profile_screen.dart';
 import 'package:washly/views/screens/share_with_friends_screen.dart';
-import 'package:washly/views/screens/transactions_screen.dart';
 import 'package:washly/views/screens/wallet_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -132,7 +130,7 @@ class CustomDrawer extends StatelessWidget {
                           title: 'logout',
                           icon: Boxicons.bx_log_out,
                           onTap: () {
-                            Get.offAll(()=>LoginScreen(), transition: Transition.rightToLeft);
+                            logoutDialog(context);
                           },
                         ),
                     ),

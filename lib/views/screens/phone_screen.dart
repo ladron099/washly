@@ -6,149 +6,160 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:washly/controllers/phoneController.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
-import 'package:washly/views/screens/verify_phone_number.dart';
+import 'package:washly/views/components/loading_screen.dart';
 
 class PhoneScreen extends StatelessWidget {
-  const PhoneScreen({super.key});
+  PhoneScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            Boxicons.bx_left_arrow_alt,
-            size: 26.w,
-            color: primaryColor,
-          ),
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            82.verticalSpace,
-            Container(
-                height: 66.h,
-                child: Center(
-                  child: Image(image: AssetImage('assets/images/rlogo.png')),
-                )),
-            40.verticalSpace,
-            Center(
-              child: Text(
-                'Washly',
-                style: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+    return GetBuilder<PhoneController>(
+      init: PhoneController(),
+             builder:(controller) {
+        return LoadingScreen(
+          loading: controller.loading.value,
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            extendBodyBehindAppBar: true,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              elevation: 0,
+              leading: IconButton(
+                icon: Icon(
+                  Boxicons.bx_left_arrow_alt,
+                  size: 26.w,
+                  color: primaryColor,
                 ),
+                onPressed: () {
+                  Get.back();
+                },
               ),
             ),
-            34.verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 83.w),
-              child: Center(
-                child: Text(
-                  'enterphonenumber',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    color: Colors.black,
-                  ),
-                ).tr(),
-              ),
-            ),
-            29.verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: SizedBox(
-                height: 70.h,
-                child: TextField(
-                  textAlignVertical: TextAlignVertical.center,
-                  keyboardType: TextInputType.phone,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                    LengthLimitingTextInputFormatter(9),
-                  ],
-                  style: TextStyle(
-                    fontSize: 15.sp,
-                    color: Colors.black,
-                  ),
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: borderGreyColor),
+            body:  SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  82.verticalSpace,
+                  Container(
+                      height: 66.h,
+                      child: Center(
+                        child: Image(image: AssetImage('assets/images/rlogo.png')),
+                      )),
+                  40.verticalSpace,
+                  Center(
+                    child: Text(
+                      'Washly',
+                      style: TextStyle(
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                      borderSide: BorderSide(color: primaryColor),
+                  ),
+                  34.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 83.w),
+                    child: Center(
+                      child: Text(
+                        'enterphonenumber',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Colors.black,
+                        ),
+                      ).tr(),
                     ),
-                    prefixIcon: CountryCodePicker(
-                      onChanged: (CountryCode countryCode) {},
-                      initialSelection: 'MA',
-                      favorite: const ['+212', 'MA'],
-                      showCountryOnly: false,
-                      showOnlyCountryWhenClosed: false,
-                      alignLeft: false,
-                      textStyle: TextStyle(
+                  ),
+                  29.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: SizedBox(
+                      height: 70.h,
+                      child: TextField(
+                        controller: controller.phone,
+                        textAlignVertical: TextAlignVertical.center,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          LengthLimitingTextInputFormatter(9),
+                        ],
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Colors.black,
+                        ),
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            borderSide: BorderSide(color: borderGreyColor),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12.r),
+                            borderSide: BorderSide(color: primaryColor),
+                          ),
+                          prefixIcon: CountryCodePicker(
+                            onChanged: (CountryCode countryCode) {
+                              controller.indicatif = countryCode.toString();
+                               print(controller.indicatif);
+                            },
+                            initialSelection: 'MA',
+                            favorite: const ['+212', 'MA'],
+                            showCountryOnly: false,
+                            showOnlyCountryWhenClosed: false,
+                            alignLeft: false,
+                            textStyle: TextStyle(
+                              fontSize: 15.sp,
+                              color: Colors.black,
+                            ),
+                            flagWidth: 25.w,
+                          ),
+                          hintText: u.tr("phone"),
+                          hintStyle: TextStyle(
+                            fontSize: 15.sp,
+                            color: borderGreyColor,
+                          ),
+                          filled: true,
+                          fillColor: Colors.transparent,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(color: borderGreyColor, width: 2),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  10.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Text(
+                      "washlywillnever",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
                         fontSize: 15.sp,
                         color: Colors.black,
                       ),
-                      flagWidth: 25.w,
-                    ),
-                    hintText: u.tr("phone"),
-                    hintStyle: TextStyle(
-                      fontSize: 15.sp,
-                      color: borderGreyColor,
-                    ),
-                    filled: true,
-                    fillColor: Colors.transparent,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: borderGreyColor, width: 2),
-                      borderRadius: BorderRadius.circular(5),
+                    ).tr(),
+                  ),
+                  20.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: PrimaryButton(
+                      onpress: () {
+                        controller.submit(context);
+                      },
+                      text: 'next',
                     ),
                   ),
-                ),
+                  20.verticalSpace,
+                ],
               ),
             ),
-            10.verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: Text(
-                "washlywillnever",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 15.sp,
-                  color: Colors.black,
-                ),
-              ).tr(),
-            ),
-            20.verticalSpace,
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w),
-              child: PrimaryButton(
-                onpress: () {
-                  Get.to(
-                    () => VerifyPhoneScreen(),
-                  );
-                },
-                text: 'next',
-              ),
-            ),
-            20.verticalSpace,
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

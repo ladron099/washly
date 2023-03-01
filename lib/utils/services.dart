@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:washly/utils/models/user.dart';
 import 'package:washly/views/screens/home_screen.dart';
+import 'package:washly/views/screens/login_screen.dart';
+import 'package:washly/views/screens/phone_screen.dart';
 import 'package:washly/views/screens/welcome_screen.dart';
 
 class MyBehavior extends ScrollBehavior {
@@ -13,25 +17,29 @@ class MyBehavior extends ScrollBehavior {
   }
 }
 
-Future<Widget> initWidget(Widget? main) async{
+Future<Widget> initWidget() async {
+  Widget? main;
   final isFirstTime = await GetStorage().read("isFirstTime");
-  if(isFirstTime != null){
-    return HomeScreen();
+  final isLogedIn = await GetStorage().read("isLogedIn");
+  final userStatus = await GetStorage().read('user_status');
+  if (isFirstTime != null) {
+    if (isLogedIn != null) {
+      switch (userStatus) {
+        case 'verified':
+          main = HomeScreen();
+          break;
+        case 'new':
+          main = PhoneScreen();
+          break;
+      }
+    } else {
+      main = LoginScreen();
+    }
+  } else {
+    main = WelcomeScreen();
   }
-  else{
-    return WelcomeScreen();
-  }
+  return main!;
 }
-
-
-goTo(Widget widget) {
-  Get.to(()=>widget, transition: Transition.leftToRight);
-}
-
-goOff(Widget widget) {
-  Get.offAll(()=>widget, transition: Transition.leftToRight);
-}
-
 
 handlerPermission() async {
   var permission = await Permission.sensors.status;
@@ -51,4 +59,58 @@ handlerPermission() async {
     await Permission.phone.request();
     await Permission.location.request();
   }
+}
+
+Future createUser(Client user) async {
+  final docUser =
+      FirebaseFirestore.instance.collection('users').doc(user.client_uid);
+  await docUser.set(user.toJson());
+}
+
+Future<String> getUserFrom(uid, type) async {
+  String message = "new-account";
+  await FirebaseFirestore.instance
+      .collection('drivers')
+      .where('driver_email', isEqualTo: uid)
+      .where('driver_type_auth', isEqualTo: type)
+      .where('is_deleted_account', isEqualTo: false)
+      .snapshots()
+      .first
+      .then((value) async {
+    message = "new-account";
+  });
+  await FirebaseFirestore.instance
+      .collection('users')
+      .where('customer_email', isEqualTo: uid)
+      .where('customer_auth_type', isEqualTo: type)
+      .where('is_deleted_account', isEqualTo: false)
+      .snapshots()
+      .first
+      .then((value) async {
+    if (value.size != 0) {
+      if (value.docs.first.get('is_verified_account')) {
+        message = "is-verified";
+      } else {
+        message = "is-not-verified";
+      }
+    } else {
+      message == "new-account";
+    }
+  });
+  return message;
+}
+
+Future<bool> saveCurrentUser(Client userBase) async {
+  bool done = false;
+  await SessionManager()
+      .set('currentUser', userBase)
+      .then((value) => done = true);
+
+  return done;
+}
+
+Future<Client?> getUserFromMemory() async {
+  Client? user = Client.fromJson(await SessionManager().get("currentUser"));
+
+  return user;
 }
