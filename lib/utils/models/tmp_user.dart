@@ -1,11 +1,11 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
 class TmpUser {
-  String phoneNo;
-  String password;
-  String email;
-  bool is_exist;
-  String type_auth;
+  String? phoneNo;
+  String? password;
+  String? email;
+  bool? is_exist;
+  String? type_auth;
 
   TmpUser({
     required this.phoneNo,
@@ -14,6 +14,7 @@ class TmpUser {
     required this.is_exist,
     required this.type_auth,
   });
+  TmpUser.fromClient();
 
   factory TmpUser.fromJson(Map<String, dynamic> json) {
     return TmpUser(

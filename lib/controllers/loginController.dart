@@ -83,10 +83,8 @@ class LoginController extends GetxController{
               );
               GetStorage().write('user_status', 'new');
               await SessionManager().set('currentUser', userBase);
-              print('before creating');
               await createUser(userBase).then(
                 (value) async {
-                  print('after creating');
                   // updateFcm(userBase);
                   Get.offAll(() => PhoneScreen(),
                       transition: Transition.rightToLeft);
