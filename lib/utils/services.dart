@@ -117,6 +117,6 @@ Future<bool> saveCurrentUser(Client userBase) async {
 
 Future<Client?> getUserFromMemory() async {
   Client? user = Client.fromJson(await SessionManager().get("currentUser"));
-
+  
   return user;
 }

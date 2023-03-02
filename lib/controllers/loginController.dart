@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -12,8 +13,11 @@ import 'package:washly/utils/models/tmp_user.dart';
 import 'package:washly/utils/models/user.dart';
 import 'package:washly/utils/quires.dart';
 import 'package:washly/utils/services.dart';
+import 'package:washly/views/screens/congrats_screen.dart';
 import 'package:washly/views/screens/home_screen.dart';
 import 'package:washly/views/screens/phone_screen.dart';
+import 'package:washly/views/screens/profile_picture_screen.dart';
+import 'package:washly/views/screens/register_screen.dart';
 
 class LoginController extends GetxController {
   RxBool loading = false.obs;
@@ -31,50 +35,97 @@ class LoginController extends GetxController {
       showAlertDialogOneButton(Get.context!, "Email invalide",
           "Veuillez entrer un email valide", "Ok");
     } else {
-      signInWithEmail(emailController.text, passwordController.text);
+      signInWithEmail(emailController.text.trim(), passwordController.text);
     }
   }
 
-  signInWithEmail(String email, String password) {
-    loading.toggle();
-    print(email + "" + password);
-    try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) async {
-        print("$value gsfgsdfgsdfgdsf");
-        await getUserFrom(email, "Email").then((message) async {
-          if (message == "new-account" || message == "is-not-verified") {
-            print(message);
-            print(value.user!.uid);
-            // Client userBase = Client(
-            //     client_uid: value.user!.uid,
-            //     client_full_name: value.user!.displayName ?? '-',
-            //     client_email: value.user!.email!,
-            //     client_phone_number: value.user!.phoneNumber ?? '-',
-            //     client_picture: value.user!.photoURL ?? '-',
-            //     client_date_naissance: '',
-            //     client_sexe: '',
-            //     client_auth_type: 'Email',
-            //     is_activated_account: false,
-            //     client_cancelled_delivery: 0,
-            //     client_succeded_delivery: 0,
-            //     client_planned_delivery: 0,
-            //     client_stars_mean: 0,
-            //     client_note: 0,
-            // );
-          } else {
-            print(message);
-          }
-        });
-      });
-    } catch (e) {
-      print(e);
-      showAlertDialogOneButton(Get.context!, "Données invalide",
-          "Veuillez entrer des données valide", "Ok");
-    }
+  Future<String> userHasMail(email) async {
+    String provider = '';
+    await FirebaseFirestore.instance
+        .collection('users')
+        .where('client_email', isEqualTo: email)
+        .where('is_deleted_account', isEqualTo: false)
+        .snapshots()
+        .first
+        .then((value) async {
+      List<DocumentSnapshot> documentSnapshot = value.docs;
+      if (value.size != 0) provider = documentSnapshot[0]['client_auth_type'];
+    });
 
+    await FirebaseFirestore.instance
+        .collection('washers')
+        .where('washer_email', isEqualTo: email)
+        .where('is_deleted_account', isEqualTo: false)
+        .snapshots()
+        .first
+        .then((value) async {
+      List<DocumentSnapshot> documentSnapshot = value.docs;
+      if (value.size != 0) provider = documentSnapshot[0]['washer_type_auth'];
+    });
+
+    return provider;
+  }
+
+  signInWithEmail(String email, String password) async {
     loading.toggle();
+    update();
+    await userHasMail(email).then((value) async {
+      if (value == "Email" || value == "") {
+        try {
+          UserCredential authResult = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(email: email, password: password);
+          User? user = authResult.user;
+          await getUser(user!.uid).then((value) async {
+            value.client_last_login_date =
+                DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now());
+            Client userBase = value;
+            await completeUser(userBase);
+            await SessionManager().set(
+              'tmpUser',
+              TmpUser(
+                email: userBase.client_email,
+                phoneNo: userBase.client_phone_number,
+                password: password,
+                is_exist: true,
+                type_auth: 'Email',
+              ),
+            );
+            await GetStorage().write('isLoggedIn', true);
+            // Get.offAll(() => const HomePage(),
+            //     transition: Transition.rightToLeft);
+            if (value.is_verified_account == false) {
+              Get.offAll(() => ProfilePictureScreen(),
+                  transition: Transition.rightToLeft);
+            }
+            if (value.is_verified_account == true) {
+              if (value.is_activated_account == false) {
+                Get.offAll(() => CongratsScreen(),
+                    transition: Transition.rightToLeft);
+              } else {
+                Get.offAll(() => const HomeScreen(),
+                    transition: Transition.rightToLeft);
+              }
+            }
+          });
+        } on FirebaseAuthException catch (e) {
+          if (e.code == 'user-not-found') {
+            showAlertDialogOneButton(Get.context!, "User not found",
+                "There is no user with this Email.", "Ok");
+          } else if (e.code == 'wrong-password') {
+            showAlertDialogOneButton(
+                Get.context!,
+                "incorrect password",
+                "Mot de passe erroné, veuillez vérifier votre mot de passe.",
+                "Ok");
+          }
+        }
+      } else {
+        showAlertDialogOneButton(Get.context!, "User already exists",
+            "Please try to login with $value", "Ok");
+      }
+    });
+    loading.toggle();
+    update();
   }
 
   void signInWithGoogle(context) async {

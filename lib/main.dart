@@ -51,7 +51,7 @@ void main() async {
                 ),
             primaryColor: primaryColor,
           ),
-          home: main,
+          home: main, 
         );
       },
     ),
