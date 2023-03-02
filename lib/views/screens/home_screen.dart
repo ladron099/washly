@@ -13,9 +13,6 @@ import 'package:washly/views/components/drawer.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/enter_address_screen.dart';
 import 'package:washly/views/screens/help_screen.dart';
-import 'package:washly/views/screens/on_road_order_screen.dart';
-import 'package:washly/views/screens/searching_scrubber_screen.dart';
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

@@ -8,11 +8,14 @@ class LoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LoadingOverlay(
-        isLoading: loading,
-        child: child,
-      )
+    return GestureDetector(
+      onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        body: LoadingOverlay(
+          isLoading: loading,
+          child: child,
+        )
+      ),
     );
   }
 }

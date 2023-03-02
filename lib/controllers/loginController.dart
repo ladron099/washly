@@ -156,7 +156,7 @@ class LoginController extends GetxController {
                   client_uid: user.uid,
                   client_full_name: user.displayName!,
                   client_email: user.email!,
-                  client_phone_number: user.phoneNumber ?? '-',
+                  client_phone_number: '-',
                   client_picture: user.photoURL!,
                   client_date_naissance: '',
                   client_sexe: '',
@@ -190,7 +190,7 @@ class LoginController extends GetxController {
                   type_auth: "Google",
                 ),
               );
-              GetStorage().write('user_status', 'new');
+              await GetStorage().write('user_status', 'new');
               await SessionManager().set('currentUser', userBase);
               await createUser(userBase).then(
                 (value) async {
@@ -278,13 +278,13 @@ class LoginController extends GetxController {
                 "Il existe déjà un compte avec cet e-mail, veuillez essayer de vous connecter avec $value",
                 "Ok");
           } else {
-            await getUserStatus(user!.uid).then((value) async {
+            await getUserStatus(user.email).then((value) async {
               if (!value) {
                 Client userBase = Client(
                     client_uid: user.uid,
                     client_full_name: user.displayName!,
                     client_email: user.email!,
-                    client_phone_number: user.phoneNumber ?? '-',
+                    client_phone_number:  '-',
                     client_picture: user.photoURL!,
                     client_date_naissance: '',
                     client_sexe: '',
@@ -318,8 +318,9 @@ class LoginController extends GetxController {
                     type_auth: "Facebook",
                   ),
                 );
-                GetStorage().write('user_status', true);
+                await GetStorage().write('user_status', 'new');
                 await SessionManager().set('currentUser', userBase);
+                await GetStorage().write('isLoggedIn', true);
                 await createUser(userBase).then(
                   (value) async {
                     // updateFcm(userBase);
@@ -343,10 +344,10 @@ class LoginController extends GetxController {
                   );
                   Client userBase = value;
                   await completeUser(userBase);
-                  await GetStorage().write('user_status', true);
+                  await GetStorage().write('user_status', 'verified');
                   await SessionManager().set('currentUser', userBase);
+                  await GetStorage().write('isLoggedIn', true);
                   // updateFcm(userBase);
-                  // goToOff(const HomePage());
                   Get.offAll(() => const HomeScreen(),
                       transition: Transition.rightToLeft);
                 });
