@@ -22,9 +22,10 @@ class PhoneController extends GetxController {
   }
 
   submit(context) async {
-    // if(userBase!.client_phone_number.isNotEmpty){
+    // logoutDialog(context);
+    if(userBase!.client_phone_number.isNotEmpty){
 
-    // }
+    }
     if (phone.text.isEmpty || phone.text.length < 9) {
       showAlertDialogOneButton(context, 'Données requises',
           'Vous devez entrer un numéro de téléphone correct.', 'Ok');

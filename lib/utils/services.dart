@@ -67,21 +67,27 @@ Future createUser(Client user) async {
   await docUser.set(user.toJson());
 }
 
-Future<String> getUserFrom(uid, type) async {
+Future<String> getUserFrom(email, type) async {
   String message = "new-account";
   await FirebaseFirestore.instance
       .collection('washers')
-      .where('washer_email', isEqualTo: uid)
+      .where('washer_email', isEqualTo: email)
       .where('washer_type_auth', isEqualTo: type)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
       .then((value) async {
-    message = "new-account";
+    if (value.size != 0) {
+      if (value.docs.first.get('is_verified_account')) {
+        message = "is-verified";
+      } else {
+        message = "is-not-verified";
+      }
+    }
   });
   await FirebaseFirestore.instance
       .collection('users')
-      .where('client_email', isEqualTo: uid)
+      .where('client_email', isEqualTo: email)
       .where('client_auth_type', isEqualTo: type)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()

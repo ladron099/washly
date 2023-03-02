@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization/easy_localization.dart' as u;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
@@ -136,6 +137,7 @@ logoutDialog(context) => showDialog(
               onPressed: () async {
                 // String fcm = await SessionManager().get('client_fcm');
                 await FirebaseAuth.instance.signOut();
+                await FacebookAuth.instance.logOut();
                 await GoogleSignIn(scopes: ['profile', 'email']).signOut();
                 await SessionManager().remove("currentUser");
                 await SessionManager().destroy();

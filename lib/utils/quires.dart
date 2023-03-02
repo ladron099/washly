@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:washly/utils/models/user.dart';
 
 Future<String> isUserExist(email) async {
-  bool exist = false;
   String provider = '';
   await FirebaseFirestore.instance
       .collection('users')

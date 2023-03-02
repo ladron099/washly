@@ -144,6 +144,7 @@ class LoginController extends GetxController {
               await SessionManager().set('currentUser', userBase);
               await createUser(userBase).then(
                 (value) async {
+                  print('after creating');
                   // updateFcm(userBase);
                   Get.offAll(() => PhoneScreen(),
                       transition: Transition.rightToLeft);
@@ -308,6 +309,7 @@ class LoginController extends GetxController {
         loading.toggle();
       }
     } catch (e) {
+      print(e.toString());
       loading.toggle();
       return showAlertDialogOneButton(context, "Problème avec Facebook",
           "Il n'y avait pas de compte facebook dans ce telephone", "Ok");

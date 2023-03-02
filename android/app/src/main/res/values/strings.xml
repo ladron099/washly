@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">washly</string>
-    <string name="facebook_app_id">563011912562836</string>
-    <string name="fb_login_protocol_scheme">fb563011912562836</string>
-    <string name="facebook_client_token">2964b43555003f4a6fab30479b102d3d</string>
+    <string name="facebook_app_id">735840538094501</string>
+    <string name="fb_login_protocol_scheme">fb735840538094501</string>
+    <string name="facebook_client_token">df6d83b9cf904bb0b8bde1a6e8133f13</string>
 </resources>
