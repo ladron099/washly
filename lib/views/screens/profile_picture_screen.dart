@@ -51,7 +51,7 @@ class ProfilePictureScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 83.w),
                       child: Center(
                         child: Text(
-                          'uploadyouridentity',
+                          'Upload a picture of yours',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 15.sp,
@@ -66,14 +66,15 @@ class ProfilePictureScreen extends StatelessWidget {
                         controller.selectImage();
                       },
                       child: Container(
-                        height: 230.h,
+                        height: 160.h,
+                        width: 160.h,
                         child: controller.file == null
                             ? Icon(
                                 FontAwesomeIcons.cloudArrowUp,
                                 color: dark.withOpacity(0.4),
                               )
                             : ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(100.r),
                                 child: Image.file(
                                   controller.image!,
                                   fit: BoxFit.cover,
@@ -82,15 +83,16 @@ class ProfilePictureScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 35.w),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 35.w, vertical: 20.h),
                       child: Text(
-                        "uploaddoc",
+                        "Upload a picture of yours",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 12.sp,
                           color: primaryColor,
                         ),
-                      ).tr(),
+                      ),
                     ),
                     146.verticalSpace,
                     Padding(

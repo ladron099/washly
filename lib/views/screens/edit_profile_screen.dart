@@ -8,7 +8,6 @@ import 'package:washly/utils/buttons.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-
 import '../../utils/services.dart';
 
 class EditInfoScreen extends StatelessWidget {

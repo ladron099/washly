@@ -11,6 +11,7 @@ import 'package:washly/views/screens/loading_screen.dart';
 import 'package:washly/views/screens/services_screen.dart';
 
 import '../../controllers/enterAdressController.dart';
+import '../components/loading_screen.dart';
 
 class EneterAddressScreen extends StatelessWidget {
   const EneterAddressScreen({super.key});
@@ -30,8 +31,9 @@ class EneterAddressScreen extends StatelessWidget {
                     child: Stack(
                       children: [
                         Container(
-                          child: controller.loading.value == false
-                              ? GoogleMap(
+                            child: LoadingScreen(
+                                loading: controller.loading.value,
+                                child: GoogleMap(
                                   mapType: MapType.normal,
                                   myLocationEnabled: true,
                                   initialCameraPosition:
@@ -43,9 +45,7 @@ class EneterAddressScreen extends StatelessWidget {
                                     controller.mapController
                                         .complete(onMapCreated);
                                   },
-                                )
-                              : LoadingScreen(),
-                        ),
+                                ))),
                         InkWell(
                           onTap: () {
                             Get.back();
@@ -260,14 +260,12 @@ class EneterAddressScreen extends StatelessWidget {
                                                   color: Colors.white,
                                                   text: "next",
                                                   onpress: (() {
-                                                     Get.to(
-                                                          () =>
-                                                              ServicesScreen(),
-                                                          transition: Transition
-                                                              .rightToLeft,
-                                                          duration: Duration(
-                                                              milliseconds:
-                                                                  500));
+                                                    Get.to(
+                                                        () => ServicesScreen(),
+                                                        transition: Transition
+                                                            .rightToLeft,
+                                                        duration: Duration(
+                                                            milliseconds: 500));
                                                   }),
                                                 ),
                                               ),

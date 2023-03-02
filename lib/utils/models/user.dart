@@ -1,5 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
+import 'car.dart';
+
 class Client {
   String client_uid;
   String client_full_name;
@@ -26,6 +28,7 @@ class Client {
   String? client_fcm;
   int client_total_orders;
   int? client_reported_times;
+  List<Car>? client_cars;
 
   Client({
     required this.client_uid,
@@ -52,7 +55,8 @@ class Client {
     required this.client_latitude,
     this.client_fcm,
     required this.client_total_orders,
-    this.client_reported_times
+    this.client_reported_times,
+    this.client_cars,
   });
 
   factory Client.fromJson(Map<String, dynamic> json) {
@@ -82,6 +86,11 @@ class Client {
       client_fcm: json['client_fcm'],
       client_total_orders: json['client_total_orders'] ?? 0,
       client_reported_times: json['client_reported_times'] ?? 0,
+      client_cars: json['client_cars'] != null
+          ? (json['client_cars'] as List)
+              .map((e) => Car.fromJson(e))
+              .toList()
+          : null,
 
     );
   }
@@ -111,6 +120,9 @@ class Client {
         'client_latitude': client_latitude,
         'client_fcm':client_fcm,
         'client_total_orders':client_total_orders,
-        'client_reported_times':client_reported_times
+        'client_reported_times':client_reported_times,
+        'client_cars': client_cars != null
+            ? client_cars!.map((e) => e.toJson()).toList()
+            : null,
       };
 }

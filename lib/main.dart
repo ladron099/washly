@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:washly/views/screens/profile_picture_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -51,7 +52,7 @@ void main() async {
                 ),
             primaryColor: primaryColor,
           ),
-          home: main, 
+          home: ProfilePictureScreen(), 
         );
       },
     ),
