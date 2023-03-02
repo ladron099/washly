@@ -111,13 +111,13 @@ Future<String> checkPhoneNumber(phoneNo) async {
   await FirebaseFirestore.instance
       .collection('users')
       .where('client_phone_number', isEqualTo: phoneNo)
-      .where('client_auth_type', whereIn: ["Phone", "Facebook", "Google"])
+      .where('client_auth_type', whereIn: ["Email", "Facebook", "Google"])
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
       .then((value) {
         if (value.size != 0) message = "found-in-users";
       });
-
+  print('messageeeeeeeeeeeeeeeeeeeeeeeeeeeeee$message');
   return message;
 }

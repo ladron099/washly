@@ -17,7 +17,6 @@ import 'package:washly/views/screens/congrats_screen.dart';
 import 'package:washly/views/screens/home_screen.dart';
 import 'package:washly/views/screens/phone_screen.dart';
 import 'package:washly/views/screens/profile_picture_screen.dart';
-import 'package:washly/views/screens/register_screen.dart';
 
 class LoginController extends GetxController {
   RxBool loading = false.obs;

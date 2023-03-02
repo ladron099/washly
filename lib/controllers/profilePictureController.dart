@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:washly/utils/services.dart';
 
-import '../utils/models/tmp_user.dart';
 import '../utils/models/user.dart';
 import 'package:image_picker/image_picker.dart';
 
