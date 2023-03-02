@@ -82,7 +82,7 @@ class RegisterController extends GetxController {
                     type_auth: "Google",
                   ),
                 );
-                GetStorage().write('user_status', 'new');
+                GetStorage().write('user_status', 'profile');
                 await SessionManager().set('currentUser', client);
                 await createUser(client).then(
                   (value) async {

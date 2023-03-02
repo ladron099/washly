@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
                     child: PrimaryButton(
                       onpress: () async {
                         if (formKey.currentState!.validate()) {
-                          // await GetStorage().write("isLogedIn", true);
+                          // await GetStorage().write("isLoggedIn", true);
                           // Get.to(() => HomeScreen(),
                           //     transition: Transition.rightToLeft);
                           controller.validate();

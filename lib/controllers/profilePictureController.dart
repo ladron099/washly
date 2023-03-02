@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:washly/utils/services.dart';
 
 import '../utils/models/user.dart';
@@ -42,16 +43,19 @@ class ProfilePictureController extends GetxController {
         });
       });
     }
-
     userBase!.client_picture = fileName;
     await saveCurrentUser(userBase!);
     await completeUser(userBase!).then((value) {
       if (value) {
+         GetStorage().write('user_status', 'new');
         Get.offAll(() => PhoneScreen());
-        loading.toggle();
-        update();
+       
       }
+       loading.toggle();
+        update();
+
     });
+    
   }
 
   @override
