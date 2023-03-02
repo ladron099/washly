@@ -85,6 +85,7 @@ class LoginController extends GetxController{
               await SessionManager().set('currentUser', userBase);
               await createUser(userBase).then(
                 (value) async {
+                  print('after creating');
                   // updateFcm(userBase);
                   Get.offAll(() => PhoneScreen(),
                       transition: Transition.rightToLeft);
@@ -253,6 +254,7 @@ class LoginController extends GetxController{
     }
       
     } catch (e) {
+      print(e.toString());
       loading.toggle();
        return showAlertDialogOneButton(
             context,

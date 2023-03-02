@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:washly/utils/models/order.dart';
 import 'package:washly/utils/static_orders.dart';
 
 class OrdersController extends GetxController {
