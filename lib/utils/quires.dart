@@ -12,9 +12,11 @@ Future<String> isUserExist(email) async {
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    if (value.size != 0) {provider = documentSnapshot[0]['client_auth_type'];
-    print(documentSnapshot[0]['client_auth_type']);
-    print(documentSnapshot[0]['client_email']);}
+    if (value.size != 0) {
+      provider = documentSnapshot[0]['client_auth_type'];
+      print(documentSnapshot[0]['client_auth_type']);
+      print(documentSnapshot[0]['client_email']);
+    }
   });
 
   await FirebaseFirestore.instance
@@ -35,6 +37,7 @@ Future completeUser(Client user) async {
   final docUser =
       FirebaseFirestore.instance.collection('users').doc(user.client_uid);
   await docUser.update(user.toJson());
+  return true;
 }
 
 Future<Client> getUser(uid) async {

@@ -9,6 +9,8 @@ import 'package:washly/views/screens/login_screen.dart';
 import 'package:washly/views/screens/phone_screen.dart';
 import 'package:washly/views/screens/welcome_screen.dart';
 
+import '../views/screens/profile_picture_screen.dart';
+
 class MyBehavior extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
@@ -20,16 +22,22 @@ class MyBehavior extends ScrollBehavior {
 Future<Widget> initWidget() async {
   Widget? main;
   final isFirstTime = await GetStorage().read("isFirstTime");
-  final isLogedIn = await GetStorage().read("isLogedIn");
+  final isLoggedIn = await GetStorage().read("isLoggedIn");
   final userStatus = await GetStorage().read('user_status');
+  print(userStatus);
+  print(isFirstTime);
+  print(isLoggedIn);
   if (isFirstTime != null) {
-    if (isLogedIn != null) {
+    if (isLoggedIn != null) {
       switch (userStatus) {
         case 'verified':
           main = HomeScreen();
           break;
         case 'new':
           main = PhoneScreen();
+          break;
+        case 'profile':
+          main = ProfilePictureScreen();
           break;
       }
     } else {
@@ -117,6 +125,6 @@ Future<bool> saveCurrentUser(Client userBase) async {
 
 Future<Client?> getUserFromMemory() async {
   Client? user = Client.fromJson(await SessionManager().get("currentUser"));
-  
+
   return user;
 }

@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:washly/controllers/profilePictureController.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
+import 'package:washly/views/components/loading_screen.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/home_screen.dart';
 
@@ -24,85 +25,89 @@ class ProfilePictureScreen extends StatelessWidget {
       body: GetBuilder<ProfilePictureController>(
           init: ProfilePictureController(),
           builder: (controller) {
-            return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  82.verticalSpace,
-                  Image(
-                    image: AssetImage('assets/images/rlogo.png'),
-                    height: 66.h,
-                  ),
-                  40.verticalSpace,
-                  Text(
-                    'Washly',
-                    style: TextStyle(
-                      fontSize: 32.sp,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+            return LoadingScreen(
+              loading: controller.loading.value,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    82.verticalSpace,
+                    Image(
+                      image: AssetImage('assets/images/rlogo.png'),
+                      height: 66.h,
                     ),
-                  ),
-                  34.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 83.w),
-                    child: Center(
+                    40.verticalSpace,
+                    Text(
+                      'Washly',
+                      style: TextStyle(
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    34.verticalSpace,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 83.w),
+                      child: Center(
+                        child: Text(
+                          'uploadyouridentity',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: Colors.black,
+                          ),
+                        ).tr(),
+                      ),
+                    ),
+                    15.verticalSpace,
+                    InkWell(
+                      onTap: () {
+                        controller.selectImage();
+                      },
+                      child: Container(
+                        height: 230.h,
+                        child: controller.file == null
+                            ? Icon(
+                                FontAwesomeIcons.cloudArrowUp,
+                                color: dark.withOpacity(0.4),
+                              )
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.file(
+                                  controller.image!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35.w),
                       child: Text(
-                        'uploadyouridentity',
+                        "uploaddoc",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 15.sp,
-                          color: Colors.black,
+                          fontSize: 12.sp,
+                          color: primaryColor,
                         ),
                       ).tr(),
                     ),
-                  ),
-                  15.verticalSpace,
-                  InkWell(
-                    onTap: () {
-                      controller.selectImage();
-                    },
-                    child: Container(
-                      height: 230.h,
-                      child: controller.file == null
-                          ? Icon(
-                              FontAwesomeIcons.cloudArrowUp,
-                              color: dark.withOpacity(0.4),
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                controller.image!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35.w),
-                    child: Text(
-                      "uploaddoc",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: primaryColor,
+                    146.verticalSpace,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 35.w),
+                      child: PrimaryButton(
+                        onpress: () async {
+                          // await GetStorage().write('isLoggedIn', true);
+                          // Get.offAll(() => HomeScreen(),
+                          //     transition: Transition.rightToLeft);
+                          controller.uploadImage();
+                        },
+                        text: 'done',
                       ),
-                    ).tr(),
-                  ),
-                  146.verticalSpace,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 35.w),
-                    child: PrimaryButton(
-                      onpress: () async {
-                        await GetStorage().write('isLoggedIn', true);
-                        Get.offAll(() => HomeScreen(),
-                            transition: Transition.rightToLeft);
-                      },
-                      text: 'done',
                     ),
-                  ),
-                  20.verticalSpace,
-                ],
+                    20.verticalSpace,
+                  ],
+                ),
               ),
             );
           }),

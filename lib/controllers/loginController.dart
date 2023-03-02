@@ -220,7 +220,7 @@ class LoginController extends GetxController {
                 Client userBase = value;
                 await completeUser(userBase);
                 await GetStorage().write('user_status', 'verified');
-                await GetStorage().write('isLogedIn', true);
+                await GetStorage().write('isLoggedIn', true);
                 await SessionManager().set('currentUser', userBase);
                 // updateFcm(userBase);
                 Get.offAll(() => HomeScreen(),
@@ -244,7 +244,7 @@ class LoginController extends GetxController {
                 Client userBase = value;
                 await completeUser(userBase);
                 await SessionManager().set('currentUser', userBase);
-                await GetStorage().write('isLogedIn', true);
+                await GetStorage().write('isLoggedIn', true);
                 // updateFcm(userBase);
                 Get.offAll(() => PhoneScreen(),
                     transition: Transition.rightToLeft);
