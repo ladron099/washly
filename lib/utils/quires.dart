@@ -1,6 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart'  ;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:washly/utils/models/user.dart';
+
 Future<String> isUserExist(email) async {
   bool exist = false;
   String provider = '';
@@ -12,7 +13,9 @@ Future<String> isUserExist(email) async {
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    if (value.size != 0) provider = documentSnapshot[0]['client_auth_type'];
+    if (value.size != 0) {provider = documentSnapshot[0]['client_auth_type'];
+    print(documentSnapshot[0]['client_auth_type']);
+    print(documentSnapshot[0]['client_email']);}
   });
 
   await FirebaseFirestore.instance
@@ -42,41 +45,37 @@ Future<Client> getUser(uid) async {
 
   Map<String, dynamic>? data = docSnapshot.data();
   user = Client.fromJson(data!);
-  if(user==null){
-    user =   Client(
-                client_uid: "",
-                client_full_name: "",
-                client_email: "",
-                client_phone_number:  '-',
-                client_picture: "",
-                client_date_naissance: '',
-                client_sexe: '',
-                client_auth_type: 'Google',
-                is_activated_account: false,
-                client_cancelled_delivery: 0,
-                client_succeded_delivery: 0,
-                client_planned_delivery: 0,
-                client_stars_mean: 0,
-                client_note: 0,
-                client_last_order_state: false,
-                client_last_login_date:
-                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                        .format(DateTime.now()),
-                client_registration_date:
-                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                        .format(DateTime.now()),
-                is_deleted_account: false,
-                is_verified_account: false,
-                client_city: '',
-                client_longitude: 0,
-                client_latitude: 0,
-                client_total_orders: 0
-              );
+  if (user == null) {
+    user = Client(
+        client_uid: "",
+        client_full_name: "",
+        client_email: "",
+        client_phone_number: '-',
+        client_picture: "",
+        client_date_naissance: '',
+        client_sexe: '',
+        client_auth_type: 'Google',
+        is_activated_account: false,
+        client_cancelled_delivery: 0,
+        client_succeded_delivery: 0,
+        client_planned_delivery: 0,
+        client_stars_mean: 0,
+        client_note: 0,
+        client_last_order_state: false,
+        client_last_login_date:
+            DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now()),
+        client_registration_date:
+            DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now()),
+        is_deleted_account: false,
+        is_verified_account: false,
+        client_city: '',
+        client_longitude: 0,
+        client_latitude: 0,
+        client_total_orders: 0);
   }
 
   return user;
 }
-
 
 Future<bool> getUserStatus(phone) async {
   bool isVerified = false;

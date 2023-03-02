@@ -68,6 +68,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: TextFieldPrimary(
+                      controller: controller.emailController,
                       visible: false,
                       hint: "email",
                       inputIcon: Icon(Boxicons.bx_envelope),
@@ -78,6 +79,7 @@ class LoginScreen extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: TextFieldPrimary(
+                      controller: controller.passwordController,
                       visible: true,
                       hint: "password",
                       inputIcon: Icon(Boxicons.bx_lock_alt),
@@ -110,9 +112,10 @@ class LoginScreen extends StatelessWidget {
                     child: PrimaryButton(
                       onpress: () async {
                         if (formKey.currentState!.validate()) {
-                          await GetStorage().write("isLogedIn", true);
-                          Get.to(() => HomeScreen(),
-                              transition: Transition.rightToLeft);
+                          // await GetStorage().write("isLogedIn", true);
+                          // Get.to(() => HomeScreen(),
+                          //     transition: Transition.rightToLeft);
+                          controller.validate();
                         }
                       },
                       text: 'login',
