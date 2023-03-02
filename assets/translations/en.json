@@ -153,5 +153,8 @@
     "verifyyourphone":"Verify your phone number",
     "areyousurewantdelete":"Are you sure you want delete this car",
     "areyousureyouwantlogout":"Are you sure you want to logout?",
+    "enteremail":"Enter your email",
+    "sendresetlink":"Reset password",
+    "washlywillneveremail":"Washly will never share your email with other companies or use it for marketing purposes.",
     "ratetext":"We value your feedback and use it to continually improve our service."
 }                      

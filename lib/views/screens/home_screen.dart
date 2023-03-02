@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:washly/controllers/homeController.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/dialogs.dart';
@@ -10,16 +11,10 @@ import 'package:washly/utils/models/order.dart';
 import 'package:washly/utils/services.dart';
 import 'package:washly/utils/static_orders.dart';
 import 'package:washly/views/components/drawer.dart';
+import 'package:washly/views/components/loading_screen.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/enter_address_screen.dart';
-import 'package:washly/views/screens/help_screen.dart';
-import 'package:washly/views/screens/loading_screen.dart';
-import 'package:washly/views/screens/on_road_order_screen.dart';
-import 'package:washly/views/screens/searching_scrubber_screen.dart';
-
-import '../../controllers/homeController.dart';
-import '../components/loading_screen.dart';
-
+import 'package:washly/views/screens/help_screen.dart'; 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

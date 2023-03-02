@@ -79,13 +79,13 @@ Future<Client> getUser(uid) async {
   return user;
 }
 
-Future<bool> getUserStatus(phone) async {
+Future<bool> getUserStatus(email) async {
   bool isVerified = false;
   await FirebaseFirestore.instance
       .collection('users')
-      .where('client_phone_number', isEqualTo: phone)
+      .where('client_email', isEqualTo: email)
       .where('is_deleted_account', isEqualTo: false)
-      .where('client_auth_type', isEqualTo: 'Phone')
+      .where('client_auth_type', isEqualTo: 'Facebook')
       .snapshots()
       .first
       .then((value) {
