@@ -29,10 +29,10 @@ class LoginController extends GetxController {
       Get.snackbar("Error", "Email is required",
           backgroundColor: Colors.red, colorText: Colors.white);
     } else if (passwordController.text.trim().isEmpty) {
-     Get.snackbar("Error", "Password is required",
+      Get.snackbar("Error", "Password is required",
           backgroundColor: Colors.red, colorText: Colors.white);
     } else if (!EmailValidator.validate(emailController.text.trim())) {
-     Get.snackbar("Error", "Please enter a valid email",
+      Get.snackbar("Error", "Please enter a valid email",
           backgroundColor: Colors.red, colorText: Colors.white);
     } else {
       signInWithEmail(emailController.text.trim(), passwordController.text);
@@ -60,7 +60,7 @@ class LoginController extends GetxController {
         .first
         .then((value) async {
       List<DocumentSnapshot> documentSnapshot = value.docs;
-      // if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
+      if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
     });
 
     return provider;
@@ -70,47 +70,178 @@ class LoginController extends GetxController {
     loading.toggle();
     print('object+$email');
     await userHasMail(email).then((value) async {
-      print("valueeeeeeeeeeee: $value");
+      print(value);
       if (value == "Email") {
         try {
           UserCredential authResult = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
           User? user = authResult.user;
-          await getUser().then((value) async {
-            value.client_last_login_date =
-                DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now());
-            Client userBase = value;
-            print(userBase.toJson().toString());
-            await saveCurrentUser(userBase);
-            await GetStorage().write('user_status', userBase.client_status);
-            await completeUser(userBase);
-            await SessionManager().set(
-              'tmpUser',
-              TmpUser(
-                email: userBase.client_email,
-                phoneNo: userBase.client_phone_number,
-                password: password,
-                is_exist: true,
-                type_auth: 'Email',
-              ),
-            );
-            await GetStorage().write('isLoggedIn', true);
-            // Get.offAll(() => const HomePage(),
-            //     transition: Transition.rightToLeft);
-            if (value.is_verified_account == false) {
-              Get.offAll(() => ProfilePictureScreen(),
-                  transition: Transition.rightToLeft);
-            }
-            if (value.is_verified_account == true) {
-              if (value.is_activated_account == false) {
-                Get.offAll(() => CongratsScreen(),
-                    transition: Transition.rightToLeft);
+          checkEmail(email).then((value) async {
+            if (value == "found-in-users") {
+              print("found-in-users");
+              await getUser().then((value) async {
+                value.client_last_login_date =
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now());
+                Client userBase = value;
+                print(userBase.toJson().toString());
+                await saveCurrentUser(userBase);
+                await GetStorage().write('user_status', userBase.client_status);
+                await completeUser(userBase);
+                await SessionManager().set(
+                  'tmpUser',
+                  TmpUser(
+                    email: userBase.client_email,
+                    phoneNo: userBase.client_phone_number,
+                    password: password,
+                    is_exist: true,
+                    type_auth: 'Email',
+                  ),
+                );
+                await GetStorage().write('isLoggedIn', true);
+                // Get.offAll(() => const HomePage(),
+                //     transition: Transition.rightToLeft);
+                if (value.is_verified_account == false) {
+                  Get.offAll(() => ProfilePictureScreen(),
+                      transition: Transition.rightToLeft);
+                }
+                if (value.is_verified_account == true) {
+                  if (value.is_activated_account == false) {
+                    Get.offAll(() => CongratsScreen(),
+                        transition: Transition.rightToLeft);
+                  } else {
+                    Get.offAll(() => const HomeScreen(),
+                        transition: Transition.rightToLeft);
+                  }
+                }
+              });
+            } else if (value == "found-in-washers") {
+              print("found-in-washers");
+
+              // ------------------------------------------------
+              String uid = FirebaseAuth.instance.currentUser!.uid;
+              Client client;
+              var docSnapshot = await FirebaseFirestore.instance
+                  .collection('washers')
+                  .doc(uid)
+                  .get();
+
+              Map<String, dynamic>? data = docSnapshot.data();
+
+              client = Client(
+                client_uid: data!['washer_uid'],
+                client_full_name: data['washer_full_name'],
+                client_email: data['washer_email'],
+                client_phone_number: data['washer_phone_number'],
+                client_picture: '',
+                client_date_naissance: data['washer_date_naissance'] ?? "",
+                client_sexe: data['washer_sexe'] ?? "",
+                client_auth_type: 'Email',
+                is_activated_account: data['is_activated_account'] ?? false,
+                client_cancelled_delivery: 0,
+                client_succeded_delivery: 0,
+                client_planned_delivery: 0,
+                client_stars_mean: 0,
+                client_note: 0,
+                client_last_order_state: false,
+                client_last_login_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                    .format(DateTime.now()),
+                client_registration_date:
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now()),
+                is_deleted_account: false,
+                is_verified_account: data['is_verified_account'] ?? false,
+                client_city: data['washer_city'] ?? "",
+                client_longitude: 0,
+                client_latitude: 0,
+                client_total_orders: 0,
+                client_status: data['washer_status'],
+              );
+
+              // ------------------------------------------------
+
+              if (client.is_verified_account == false) {
+                await SessionManager().set(
+                  'tmpUser',
+                  TmpUser(
+                    phoneNo: '',
+                    password: '',
+                    email: client!.client_email,
+                    is_exist: false,
+                    type_auth: "Email",
+                  ),
+                );
+                await GetStorage().write('user_status', 'profile');
+                await SessionManager().set('currentUser', client);
+                await createUser(client).then(
+                  (value) async {
+                    print('after creating');
+                    // updateFcm(userBase);
+                    Get.offAll(() => ProfilePictureScreen(),
+                        transition: Transition.rightToLeft);
+                  },
+                );
               } else {
-                Get.offAll(() => const HomeScreen(),
+                await SessionManager().set(
+                  'tmpUser',
+                  TmpUser(
+                    phoneNo: client.client_phone_number,
+                    password: '',
+                    email: client.client_email,
+                    is_exist: true,
+                    type_auth: "Email",
+                  ),
+                );
+                client.client_last_login_date =
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now());
+                await addUser(client);
+                await GetStorage().write('user_status', 'verified');
+                await GetStorage().write('isLoggedIn', true);
+                await SessionManager().set('currentUser', client);
+                // updateFcm(userBase);
+                Get.offAll(() => HomeScreen(),
                     transition: Transition.rightToLeft);
               }
+            } else {
+              print("not-found");
             }
           });
+          // await getUser().then((value) async {
+          //   value.client_last_login_date =
+          //       DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now());
+          //   Client userBase = value;
+          //   print(userBase.toJson().toString());
+          //   await saveCurrentUser(userBase);
+          //   await GetStorage().write('user_status', userBase.client_status);
+          //   await completeUser(userBase);
+          //   await SessionManager().set(
+          //     'tmpUser',
+          //     TmpUser(
+          //       email: userBase.client_email,
+          //       phoneNo: userBase.client_phone_number,
+          //       password: password,
+          //       is_exist: true,
+          //       type_auth: 'Email',
+          //     ),
+          //   );
+          //   await GetStorage().write('isLoggedIn', true);
+          //   // Get.offAll(() => const HomePage(),
+          //   //     transition: Transition.rightToLeft);
+          //   if (value.is_verified_account == false) {
+          //     Get.offAll(() => ProfilePictureScreen(),
+          //         transition: Transition.rightToLeft);
+          //   }
+          //   if (value.is_verified_account == true) {
+          //     if (value.is_activated_account == false) {
+          //       Get.offAll(() => CongratsScreen(),
+          //           transition: Transition.rightToLeft);
+          //     } else {
+          //       Get.offAll(() => const HomeScreen(),
+          //           transition: Transition.rightToLeft);
+          //     }
+          //   }
+          // });
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             Get.snackbar("Error", "No user found for that email.",
@@ -124,6 +255,7 @@ class LoginController extends GetxController {
         Get.snackbar("Error", "Please try to login with $value",
             backgroundColor: Colors.red, colorText: Colors.white);
       } else {
+        print(value);
         Get.snackbar("Error", "User not found",
             backgroundColor: Colors.red, colorText: Colors.white);
       }
@@ -140,8 +272,9 @@ class LoginController extends GetxController {
         if (value != "Google" && value != "") {
           await FirebaseAuth.instance.signOut();
           await GoogleSignIn(scopes: ['profile', 'email']).signOut();
-          return Get.snackbar("Error", "There is already this email try using $value",
-          backgroundColor: Colors.red, colorText: Colors.white);
+          return Get.snackbar(
+              "Error", "There is already this email try using $value",
+              backgroundColor: Colors.red, colorText: Colors.white);
         } else {
           GoogleSignInAuthentication googleSignInAuthentication =
               await googleAccount.authentication;
@@ -260,6 +393,150 @@ class LoginController extends GetxController {
     }
   }
 
+  signinWithallV2() {
+    signInWithEmail(String email, String password) async {
+      loading.toggle();
+      print('object+$email');
+      await isUserExist(email.trim().toLowerCase()).then((value) async {
+        if (value != "Email" && value != "") {
+          await FirebaseAuth.instance.signOut();
+          await GoogleSignIn(scopes: ['profile', 'email']).signOut();
+          return Get.snackbar(
+              "Error", "There is already this email try using $value",
+              backgroundColor: Colors.red, colorText: Colors.white);
+        } else {
+          checkEmail(email.trim().toLowerCase()).then((value) {
+            if (value == "found-in-users") {}
+          });
+          UserCredential credential = await FirebaseAuth.instance
+              .signInWithEmailAndPassword(
+                  email: email.trim().toLowerCase(), password: password);
+
+          User? user = credential.user;
+          await getUserFrom(user!.email, "Email").then((message) async {
+            if (message == "new-account" || message == "is-not-verified") {
+              await FirebaseFirestore.instance
+                  .collection('washers')
+                  .where('washer_email', isEqualTo: email)
+                  .where('washer_auth_type', isEqualTo: "Email")
+                  .where('is_deleted_account', isEqualTo: false)
+                  .snapshots()
+                  .first
+                  .then((value) async {
+                if (value.size != 0) {
+                  if (value.docs.first.get('is_verified_account')) {
+                    message = "is-verified";
+                  } else {
+                    message = "is-not-verified";
+                  }
+                }
+              });
+              Client userBase = Client(
+                client_uid: user.uid,
+                client_full_name: user.displayName!,
+                client_email: user.email!,
+                client_phone_number: '-',
+                client_picture: user.photoURL!,
+                client_date_naissance: '',
+                client_sexe: '',
+                client_auth_type: 'Email',
+                is_activated_account: false,
+                client_cancelled_delivery: 0,
+                client_succeded_delivery: 0,
+                client_planned_delivery: 0,
+                client_stars_mean: 0,
+                client_note: 0,
+                client_last_order_state: false,
+                client_last_login_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                    .format(DateTime.now()),
+                client_registration_date:
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now()),
+                is_deleted_account: false,
+                is_verified_account: false,
+                client_city: '',
+                client_longitude: 0,
+                client_latitude: 0,
+                client_total_orders: 0,
+                client_status: 'new',
+              );
+              await SessionManager().set(
+                'tmpUser',
+                TmpUser(
+                  phoneNo: '',
+                  password: '',
+                  email: user.email!,
+                  is_exist: false,
+                  type_auth: "Google",
+                ),
+              );
+              await GetStorage().write('user_status', 'new');
+              await SessionManager().set('currentUser', userBase);
+              await createUser(userBase).then(
+                (value) async {
+                  print('after creating');
+                  // updateFcm(userBase);
+                  Get.offAll(() => PhoneScreen(),
+                      transition: Transition.rightToLeft);
+                },
+              );
+            }
+            if (message == "is-verified") {
+              await getUser().then((value) async {
+                await SessionManager().set(
+                  'tmpUser',
+                  TmpUser(
+                    phoneNo: value.client_phone_number,
+                    password: '',
+                    email: user.email!,
+                    is_exist: true,
+                    type_auth: "Google",
+                  ),
+                );
+                value.client_last_login_date =
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now());
+                Client userBase = value;
+                await completeUser(userBase);
+                await GetStorage().write('user_status', 'verified');
+                await GetStorage().write('isLoggedIn', true);
+                await SessionManager().set('currentUser', userBase);
+                // updateFcm(userBase);
+                Get.offAll(() => HomeScreen(),
+                    transition: Transition.rightToLeft);
+              });
+            } else {
+              await getUser().then((value) async {
+                await SessionManager().set(
+                  'tmpUser',
+                  TmpUser(
+                    phoneNo: value.client_phone_number,
+                    password: '',
+                    email: user.email!,
+                    is_exist: true,
+                    type_auth: "Google",
+                  ),
+                );
+                value.client_last_login_date =
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now());
+                Client userBase = value;
+                await completeUser(userBase);
+                await SessionManager().set('currentUser', userBase);
+                await GetStorage().write('isLoggedIn', true);
+                // updateFcm(userBase);
+                Get.offAll(() => PhoneScreen(),
+                    transition: Transition.rightToLeft);
+              });
+            }
+          });
+        }
+      });
+      loading.toggle();
+      loading.toggle();
+    }
+  }
+
   void signInWithFacebook(context) async {
     loading.toggle();
 
@@ -276,7 +553,7 @@ class LoginController extends GetxController {
             await FirebaseAuth.instance.signOut();
             await FacebookAuth.instance.logOut();
             return Get.snackbar("Error", "Email already exist try using $value",
-          backgroundColor: Colors.red, colorText: Colors.white);
+                backgroundColor: Colors.red, colorText: Colors.white);
           } else {
             await getUserStatus(user.email).then((value) async {
               if (!value) {
@@ -364,7 +641,7 @@ class LoginController extends GetxController {
     } catch (e) {
       print(e.toString());
       loading.toggle();
-       Get.snackbar("Error", "There is no Facebook account on this Device");
+      Get.snackbar("Error", "There is no Facebook account on this Device");
     }
   }
 

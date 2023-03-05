@@ -28,7 +28,7 @@ Future<String> isUserExist(email) async {
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    // if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
+    if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
   });
 
   return provider;
@@ -38,6 +38,12 @@ Future completeUser(Client user) async {
   final docUser =
       FirebaseFirestore.instance.collection('users').doc(user.client_uid);
   await docUser.update(user.toJson());
+  return true;
+}
+Future addUser(Client user) async {
+  final docUser =
+      FirebaseFirestore.instance.collection('users').doc(user.client_uid);
+  await docUser.set(user.toJson());
   return true;
 }
 
@@ -81,6 +87,8 @@ Future<Client> getUser() async {
   return user;
 }
 
+
+
 Future<bool> getUserStatus(email) async {
   bool isVerified = false;
   await FirebaseFirestore.instance
@@ -105,7 +113,7 @@ Future<String> checkPhoneNumber(phoneNo) async {
   await FirebaseFirestore.instance
       .collection('washers')
       .where('washer_phone_number', isEqualTo: phoneNo)
-      .where('washer_auth_type', whereIn: ["Phone", "Facebook", "Google"])
+      .where('washer_auth_type', whereIn: ["Email", "Facebook", "Google"])
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
@@ -124,5 +132,33 @@ Future<String> checkPhoneNumber(phoneNo) async {
         if (value.size != 0) message = "found-in-users";
       });
   print('messageeeeeeeeeeeeeeeeeeeeeeeeeeeeee$message');
+  return message;
+}
+
+Future<String> checkEmail(email) async {
+  String message = "not-found";
+
+  await FirebaseFirestore.instance
+      .collection('washers')
+      .where('washer_email', isEqualTo: email)
+      .where('washer_auth_type', whereIn: ["Email", "Facebook", "Google"])
+      .where('is_deleted_account', isEqualTo: false)
+      .snapshots()
+      .first
+      .then((value) {
+        if (value.size != 0) message = "found-in-washers";
+      });
+
+  await FirebaseFirestore.instance
+      .collection('users')
+      .where('client_email', isEqualTo: email)
+      .where('client_auth_type', whereIn: ["Email", "Facebook", "Google"])
+      .where('is_deleted_account', isEqualTo: false)
+      .snapshots()
+      .first
+      .then((value) {
+        if (value.size != 0) message = "found-in-users";
+      });
+  print('messageeeeeeeeeeeeeeeeeeeeeeeeeeeeee$message $email');
   return message;
 }

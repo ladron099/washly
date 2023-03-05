@@ -116,7 +116,7 @@ Future<String> getUserFrom(email, type) async {
     }
   });
   return message;
-}
+} 
 
 Future<bool> saveCurrentUser(Client userBase) async {
   bool done = false;
