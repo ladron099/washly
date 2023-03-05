@@ -22,13 +22,9 @@ class PhoneController extends GetxController {
   }
 
   submit(context) async {
-    // logoutDialog(context);
-    if(userBase!.client_phone_number.isNotEmpty){
-
-    }
+    if (userBase!.client_phone_number.isNotEmpty) {}
     if (phone.text.isEmpty || phone.text.length < 9) {
-      showAlertDialogOneButton(context, 'Données requises',
-          'Vous devez entrer un numéro de téléphone correct.', 'Ok');
+      Get.snackbar("Error", "Please enter a valid phone number");
     } else {
       loading.toggle();
       update();
@@ -42,17 +38,14 @@ class PhoneController extends GetxController {
               timeout: const Duration(seconds: 60),
               verificationCompleted: (phonesAuthCredentials) async {},
               verificationFailed: (FirebaseAuthException e) async {
-                loading.toggle();
                 if (e.code == 'too-many-requests') {
-                  showAlertDialogOneButton(
-                      context,
-                      'Trop de demandes',
-                      "Nous avons bloqué toutes les demandes de cet appareil en raison d'une activité inhabituelle, réessayez",
-                      "Ok");
+                 Get.snackbar("Error", "Too many requests, please try again later",
+          backgroundColor: Colors.red, colorText: Colors.white);
                 }
               },
               codeSent: (verificationId, resendingToken) async {
-                TmpUser tmpUser = TmpUser.fromJson(await SessionManager().get("tmpUser"));
+                TmpUser tmpUser =
+                    TmpUser.fromJson(await SessionManager().get("tmpUser"));
                 tmpUser.phoneNo = indicatif + phone.text;
                 await SessionManager().set("tmpUser", tmpUser);
                 print('userrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr${tmpUser.toJson()}');
@@ -78,25 +71,17 @@ class PhoneController extends GetxController {
           } else {
             loading.toggle();
             update();
-            showAlertDialogOneButton(
-              context,
-              'Le numéro de téléphone existe déjà',
-              'Veuillez fournir un autre numéro de téléphone',
-              'Ok',
-            );
+           Get.snackbar("Error", "This phone number is already registered",
+          backgroundColor: Colors.red, colorText: Colors.white);
           }
         }
       }).catchError((e) {
         print(e.toString());
-        loading.toggle();
-        update();
-        showAlertDialogOneButton(
-          context,
-          'Erreur',
-          'Une erreur s\'est produite, veuillez réessayer',
-          'Ok',
-        );
+      Get.snackbar("Error", "Something went wrong, please try again later",
+          backgroundColor: Colors.red, colorText: Colors.white);
       });
+      loading.toggle();
+      update();
     }
   }
 

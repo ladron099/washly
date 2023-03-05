@@ -19,16 +19,17 @@ class MyBehavior extends ScrollBehavior {
   }
 }
 
-Future<Widget> initWidget() async {
+Future<Widget> initWidget() async { 
   Widget main = WelcomeScreen();
   final isFirstTime = await GetStorage().read("isFirstTime");
   final isLoggedIn = await GetStorage().read("isLoggedIn");
   final userStatus = await GetStorage().read('user_status');
   print("userStatus $userStatus");
   print("is first time $isFirstTime");
+  
   print("isLoggedIn $isLoggedIn");
   if (isFirstTime != null) {
-    if (isLoggedIn != null || isLoggedIn == true) {
+    if (isLoggedIn != null ) {
       switch (userStatus) {
         case 'verified':
           main = HomeScreen();

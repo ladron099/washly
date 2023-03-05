@@ -11,6 +11,7 @@ class OrdersScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           hasTitle: true, title: "myorders", subTitle: "hereisallorders"),
       body: ScrollConfiguration(
@@ -22,59 +23,61 @@ class OrdersScreen extends StatelessWidget {
                   init: OrdersController(),
                   builder: (controller) {
                     return Column(children: [
-                        20.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PriceWidget(
-                              text: "totalamount",
-                              total: 7000,
-                            ),
-                            PriceWidget(
-                              text: "orders",
-                              total: 110,
-                            ),
-                          ],
-                        ),
-                        20.verticalSpace,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FilterWidget(
-                              text: "all",
-                              index: 0,
-                              selected: controller.currIndex,
-                              onPress: () => controller.switchIndex(0),
-                            ),
-                            FilterWidget(
-                              text: "done",
-                              index: 1,
-                              selected: controller.currIndex,
-                              onPress: () => controller.switchIndex(1),
-                            ),
-                            FilterWidget(
-                              text: "pending",
-                              index: 2,
-                              selected: controller.currIndex,
-                              onPress: () => controller.switchIndex(2),
-                            ),
-                            FilterWidget(
-                              text: "canceled",
-                              index: 3,
-                              selected: controller.currIndex,
-                              onPress: () => controller.switchIndex(3),
-                            ),
-                          ],
-                        ),
+                      20.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          PriceWidget(
+                            text: "totalamount",
+                            total: 7000,
+                          ),
+                          PriceWidget(
+                            text: "orders",
+                            total: 110,
+                          ),
+                        ],
+                      ),
+                      20.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FilterWidget(
+                            text: "all",
+                            index: 0,
+                            selected: controller.currIndex,
+                            onPress: () => controller.switchIndex(0),
+                          ),
+                          FilterWidget(
+                            text: "done",
+                            index: 1,
+                            selected: controller.currIndex,
+                            onPress: () => controller.switchIndex(1),
+                          ),
+                          FilterWidget(
+                            text: "pending",
+                            index: 2,
+                            selected: controller.currIndex,
+                            onPress: () => controller.switchIndex(2),
+                          ),
+                          FilterWidget(
+                            text: "canceled",
+                            index: 3,
+                            selected: controller.currIndex,
+                            onPress: () => controller.switchIndex(3),
+                          ),
+                        ],
+                      ),
                       20.verticalSpace,
                       ListView.separated(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                          itemBuilder: (context, index) => OrderHistoryWidget(order: controller.filtredOrders[index],),
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) => OrderHistoryWidget(
+                                order: controller.filtredOrders[index],
+                              ),
                           separatorBuilder: (context, index) =>
                               10.verticalSpace,
                           itemCount: controller.filtredOrders.length),
-                          15.verticalSpace
+                      15.verticalSpace
                     ]);
                   }),
             ),

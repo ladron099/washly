@@ -324,8 +324,10 @@ class ReviewCheckOutScreen extends StatelessWidget {
                                         text: "done",
                                         color: secondaryColor,
                                         onpress: () {
-                                          Get.to(() => SearchingScrubberScreen(),
-                            transition: Transition.rightToLeft);
+                                          Get.to(
+                                              () => SearchingScrubberScreen(),
+                                              transition:
+                                                  Transition.rightToLeft);
                                         })),
                                 26.verticalSpace,
                               ],

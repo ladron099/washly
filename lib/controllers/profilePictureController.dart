@@ -47,6 +47,7 @@ class ProfilePictureController extends GetxController {
           await completeUser(userBase!).then((value) {
             if (value) {
               GetStorage().write('user_status', 'new');
+              GetStorage().write('isLoggedIn', true);
               Get.offAll(() => PhoneScreen());
             }
             loading.toggle();

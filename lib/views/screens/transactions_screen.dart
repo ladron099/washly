@@ -11,6 +11,7 @@ class TransactionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           hasTitle: true,
           title: "transactions",
@@ -64,9 +65,7 @@ class TransactionsScreen extends StatelessWidget {
                     ListView.separated(
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemBuilder: (context, index) => ListTile(
-                          
-                        ),
+                        itemBuilder: (context, index) => ListTile(),
                         separatorBuilder: (context, index) => 10.verticalSpace,
                         itemCount: controller.filtredOrders.length),
                     15.verticalSpace

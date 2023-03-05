@@ -13,7 +13,9 @@ class NewCarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(hasTitle: true, title: "addvechile", subTitle: "addyourvechile"),
+      backgroundColor: Colors.white,
+      appBar: CustomAppBar(
+          hasTitle: true, title: "addvechile", subTitle: "addyourvechile"),
       body: Container(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         width: 375.w,
@@ -26,37 +28,70 @@ class NewCarScreen extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    border: Border.all(color: primaryColor, width: 1),
-                    borderRadius: BorderRadius.circular(15.r)
-                  ),
+                      border: Border.all(color: primaryColor, width: 1),
+                      borderRadius: BorderRadius.circular(15.r)),
                   width: 210.w,
                   height: 210.w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Boxicons.bx_image, color: primaryColor, size: 100.sp,),
+                      Icon(
+                        Boxicons.bx_image,
+                        color: primaryColor,
+                        size: 100.sp,
+                      ),
                       10.verticalSpace,
-                      Text("uploadveichlephoto", style: TextStyle(color: primaryColor, fontSize: 14.sp, ),).tr()
+                      Text(
+                        "uploadveichlephoto",
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 14.sp,
+                        ),
+                      ).tr()
                     ],
                   ),
                 ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "name", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "name",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "type", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "type",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "mark", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "mark",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "model", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "model",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "color", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "color",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
-                TextFieldPrimary(hint: "matricul", visible: true, hasIcon: false,),
+                TextFieldPrimary(
+                  hint: "matricul",
+                  visible: true,
+                  hasIcon: false,
+                ),
                 15.verticalSpace,
                 Container(
-                  width: 300.w,
-                  child: PrimaryButton(text: 'save', onpress: (){}))
+                    width: 300.w,
+                    child: PrimaryButton(text: 'save', onpress: () {}))
               ],
             ),
           ),

@@ -63,11 +63,13 @@ class VerifyPhoneController extends GetxController {
       try {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: code.text);
-        User? user = FirebaseAuth.instance.currentUser; 
+        User? user = FirebaseAuth.instance.currentUser;
         print(user!.uid);
         user.linkWithCredential(credential).then((value) async {
-          TmpUser tmpUser = TmpUser.fromJson(await SessionManager().get("tmpUser"));
-          Client userBase = Client.fromJson(await SessionManager().get('currentUser'));
+          TmpUser tmpUser =
+              TmpUser.fromJson(await SessionManager().get("tmpUser"));
+          Client userBase =
+              Client.fromJson(await SessionManager().get('currentUser'));
           userBase.is_activated_account = true;
           userBase.is_verified_account = true;
           userBase.client_phone_number = tmpUser.phoneNo!;
@@ -84,15 +86,17 @@ class VerifyPhoneController extends GetxController {
           );
         });
         print(tmpUser!.email);
-      } catch (e) {
-        showAlertDialogOneButton(
-            context, "Code requis", "Veuillez entrer le bon code.", "Ok");
+      } on FirebaseAuthException catch (e) {
+       Get.snackbar("Error", "Code incorrect",
+          backgroundColor: Colors.red, colorText: Colors.white);
         loading.toggle();
         update();
       }
     } else {
-      showAlertDialogOneButton(
-          context, "Code requis", "Veuillez entrer le bon code.", "Ok");
+      Get.snackbar("Error", "Please enter the code given",
+          backgroundColor: Colors.red, colorText: Colors.white);
+      loading.toggle();
+      update();
     }
   }
 

@@ -14,6 +14,7 @@ class OrderHistoryDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           hasTitle: true,
           title: "detailsoforder",
@@ -214,12 +215,14 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               Text(
                                 "paymentmethod",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ).tr(),
                               Text(
                                 "Cash",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
@@ -233,12 +236,14 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               Text(
                                 "subtotal",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ).tr(),
                               Text(
                                 "70.00 MAD",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
@@ -252,12 +257,14 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               Text(
                                 "discount",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ).tr(),
                               Text(
                                 "-17.00 MAD",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),
@@ -271,12 +278,14 @@ class OrderHistoryDetailScreen extends StatelessWidget {
                               Text(
                                 "total",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ).tr(),
                               Text(
                                 "53.00 MAD",
                                 style: TextStyle(
-                                    fontSize: 14.sp, fontWeight: FontWeight.w400),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),

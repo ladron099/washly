@@ -26,14 +26,14 @@ class LoginController extends GetxController {
 
   void validate() {
     if (emailController.text.trim().isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "Email vide", "Veuillez entrer votre email", "Ok");
+      Get.snackbar("Error", "Email is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
     } else if (passwordController.text.trim().isEmpty) {
-      showAlertDialogOneButton(Get.context!, "Mot de passe vide",
-          "Veuillez entrer votre mot de passe", "Ok");
+     Get.snackbar("Error", "Password is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
     } else if (!EmailValidator.validate(emailController.text.trim())) {
-      showAlertDialogOneButton(Get.context!, "Email invalide",
-          "Veuillez entrer un email valide", "Ok");
+     Get.snackbar("Error", "Please enter a valid email",
+          backgroundColor: Colors.red, colorText: Colors.white);
     } else {
       signInWithEmail(emailController.text.trim(), passwordController.text);
     }
@@ -113,14 +113,11 @@ class LoginController extends GetxController {
           });
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
-            showAlertDialogOneButton(Get.context!, "User not found",
-                "There is no user with this Email.", "Ok");
+            Get.snackbar("Error", "No user found for that email.",
+                backgroundColor: Colors.red, colorText: Colors.white);
           } else if (e.code == 'wrong-password') {
-            showAlertDialogOneButton(
-                Get.context!,
-                "incorrect password",
-                "Mot de passe erroné, veuillez vérifier votre mot de passe.",
-                "Ok");
+            Get.snackbar("Error", "Wrong password provided for that user.",
+                backgroundColor: Colors.red, colorText: Colors.white);
           }
         }
       } else if (value != "") {
@@ -143,11 +140,8 @@ class LoginController extends GetxController {
         if (value != "Google" && value != "") {
           await FirebaseAuth.instance.signOut();
           await GoogleSignIn(scopes: ['profile', 'email']).signOut();
-          return showAlertDialogOneButton(
-              context,
-              "L'utilisateur existe déjà",
-              "Il existe déjà un compte avec cet e-mail, veuillez essayer de vous connecter avec $value",
-              "Ok");
+          return Get.snackbar("Error", "There is already this email try using $value",
+          backgroundColor: Colors.red, colorText: Colors.white);
         } else {
           GoogleSignInAuthentication googleSignInAuthentication =
               await googleAccount.authentication;
@@ -281,11 +275,8 @@ class LoginController extends GetxController {
           if (value != 'Facebook' && value != '') {
             await FirebaseAuth.instance.signOut();
             await FacebookAuth.instance.logOut();
-            return showAlertDialogOneButton(
-                context,
-                "L'utilisateur existe déjà",
-                "Il existe déjà un compte avec cet e-mail, veuillez essayer de vous connecter avec $value",
-                "Ok");
+            return Get.snackbar("Error", "Email already exist try using $value",
+          backgroundColor: Colors.red, colorText: Colors.white);
           } else {
             await getUserStatus(user.email).then((value) async {
               if (!value) {
@@ -373,8 +364,7 @@ class LoginController extends GetxController {
     } catch (e) {
       print(e.toString());
       loading.toggle();
-      return showAlertDialogOneButton(context, "Problème avec Facebook",
-          "Il n'y avait pas de compte facebook dans ce telephone", "Ok");
+       Get.snackbar("Error", "There is no Facebook account on this Device");
     }
   }
 

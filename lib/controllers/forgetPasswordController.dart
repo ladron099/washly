@@ -10,19 +10,20 @@ class ForgetPasswordController extends GetxController {
   TextEditingController email = TextEditingController();
 
   submit(context) async {
-    if (email.text.isNotEmpty) {
+    if (email.text.trim().isNotEmpty) {
       loading.toggle();
       update();
       try {
-        await isUserExist(email.text).then((value) {
+        await isUserExist(email.text.trim()).then((value) {
           if (value == 'Facebook' || value == 'Google') {
             Get.snackbar('Error', 'This email is linked with with: $value',
                 duration: Duration(seconds: 5));
           } else if (value == 'Email') {
             FirebaseAuth.instance
-                .sendPasswordResetEmail(email: email.text)
+                .sendPasswordResetEmail(email: email.text.trim())
                 .then((value) {
-                  Get.offAll(()=>LoginScreen(), transition: Transition.rightToLeft);
+              Get.offAll(() => LoginScreen(),
+                  transition: Transition.rightToLeft);
               Get.snackbar('Success', 'Please check your email',
                   duration: Duration(seconds: 5),
                   backgroundColor: secondaryColor,

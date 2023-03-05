@@ -17,10 +17,9 @@ class WalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
-          hasTitle: true,
-          title: "mywallet",
-          subTitle: "hereisyourwallet"),
+          hasTitle: true, title: "mywallet", subTitle: "hereisyourwallet"),
       body: GetBuilder<WalletController>(
           init: WalletController(),
           builder: (controller) => Container(
@@ -28,57 +27,56 @@ class WalletScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     20.verticalSpace,
-                     Container(
-      width: 340.w,
-      height: 140.h,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.r),
-          color:  primaryColor),
-      alignment: Alignment.center,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '5940.00 MAD',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w700,
-                ),
-              ).tr(),
-              25.verticalSpace,
-              Text(
-                'totalbalance', 
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ).tr(),
-            ],
-          ),
-          10.verticalSpace,
-         Container(
-          width:70.w ,
-          height: 70.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(50.r),
-          ),
-          child: Icon(
-            Boxicons.bx_wallet,
-            color: primaryColor,
-            size: 30.sp,
-          ),
-         )
-        ],
-      ),
-    ),
-
+                    Container(
+                      width: 340.w,
+                      height: 140.h,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12.r),
+                          color: primaryColor),
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '5940.00 MAD',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ).tr(),
+                              25.verticalSpace,
+                              Text(
+                                'totalbalance',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ).tr(),
+                            ],
+                          ),
+                          10.verticalSpace,
+                          Container(
+                            width: 70.w,
+                            height: 70.h,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(50.r),
+                            ),
+                            child: Icon(
+                              Boxicons.bx_wallet,
+                              color: primaryColor,
+                              size: 30.sp,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                     20.verticalSpace,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,14 +86,14 @@ class WalletScreen extends StatelessWidget {
                           index: 0,
                           selected: controller.currIndex,
                           hasSize: true,
-                         width: 100.w,
+                          width: 100.w,
                           onPress: () => controller.switchIndex(0),
                         ),
                         FilterWidget(
                           text: "in",
                           index: 1,
                           hasSize: true,
-                         width: 100.w,
+                          width: 100.w,
                           selected: controller.currIndex,
                           onPress: () => controller.switchIndex(1),
                         ),
@@ -103,44 +101,62 @@ class WalletScreen extends StatelessWidget {
                           text: "out",
                           index: 2,
                           hasSize: true,
-                         width: 100.w,
+                          width: 100.w,
                           selected: controller.currIndex,
                           onPress: () => controller.switchIndex(2),
                         ),
                       ],
-                    ),   
+                    ),
                     15.verticalSpace,
                     Expanded(
                       child: ScrollConfiguration(
                         behavior: MyBehavior(),
                         child: ListView.separated(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
                             itemBuilder: (context, index) => ListTile(
-                              contentPadding: EdgeInsets.zero,
-                                  title: Text(
-                                          controller.filtredTransactions[index].transactionType == 0
-                                              ? "washlytoyou"
-                                              : "youtowashly")
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(controller
+                                                  .filtredTransactions[index]
+                                                  .transactionType ==
+                                              0
+                                          ? "washlytoyou"
+                                          : "youtowashly")
                                       .tr(),
-                                  subtitle: Text(
-                                      controller.filtredTransactions[index].transactionDatetime!),
+                                  subtitle: Text(controller
+                                      .filtredTransactions[index]
+                                      .transactionDatetime!),
                                   leading: Container(
                                     decoration: BoxDecoration(
-                                        color:
-                                            controller.filtredTransactions[index].transactionType == 0
-                                                ? secondaryColor
-                                                : redColor,
-                                        borderRadius: BorderRadius.circular(50)),
+                                        color: controller
+                                                    .filtredTransactions[index]
+                                                    .transactionType ==
+                                                0
+                                            ? secondaryColor
+                                            : redColor,
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
                                     width: 47.w,
                                     height: 47.w,
-                                    child: Icon(Boxicons.bx_transfer, color: Colors.white,),
+                                    child: Icon(
+                                      Boxicons.bx_transfer,
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                  trailing: Text("${controller.filtredTransactions[index].transactionType == 0? " + "+controller.filtredTransactions[index].transactionPrice.toString():" - "+controller.filtredTransactions[index].transactionPrice.toString()} MAD", style: TextStyle(color: controller.filtredTransactions[index].transactionType == 0
-                                                ? secondaryColor
-                                                : redColor , fontSize: 15.sp )),
+                                  trailing: Text(
+                                      "${controller.filtredTransactions[index].transactionType == 0 ? " + " + controller.filtredTransactions[index].transactionPrice.toString() : " - " + controller.filtredTransactions[index].transactionPrice.toString()} MAD",
+                                      style: TextStyle(
+                                          color: controller
+                                                      .filtredTransactions[
+                                                          index]
+                                                      .transactionType ==
+                                                  0
+                                              ? secondaryColor
+                                              : redColor,
+                                          fontSize: 15.sp)),
                                 ),
-                            separatorBuilder: (context, index) => 15.verticalSpace,
+                            separatorBuilder: (context, index) =>
+                                15.verticalSpace,
                             itemCount: controller.filtredTransactions.length),
                       ),
                     )

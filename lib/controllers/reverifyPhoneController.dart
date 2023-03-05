@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -61,11 +62,14 @@ class ReverifyPhoneController extends GetxController {
   submit(context) async {
     print(code.text);
     if (code.text.isNotEmpty) {
+      print(5555);
       loading.toggle();
       update();
       try {
+        print(9999);
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
             verificationId: verificationCode, smsCode: code.text);
+        print("this is how i treat ${credential.token}");
         User? user = FirebaseAuth.instance.currentUser;
         print(user!.uid);
         user.updatePhoneNumber(credential).then((value) async {
@@ -91,16 +95,18 @@ class ReverifyPhoneController extends GetxController {
         });
         print(tmpUser!.email);
       } catch (e) {
-        print(e.toString());
-        showAlertDialogOneButton(
-            context, "Code requis", "Veuillez entrer le bon code.", "Ok");
+        print(e.toString() + "ehhhhh");
+        Get.snackbar("Error", "Code incorrect",
+            backgroundColor: Colors.red, colorText: Colors.white);
         loading.toggle();
         update();
       }
     } else {
-      showAlertDialogOneButton(
-          context, "Code requis", "Veuillez entrer le bon code.", "Ok");
+      Get.snackbar("Error", "Please enter the given code",
+          backgroundColor: Colors.red, colorText: Colors.white);
     }
+    loading.toggle();
+    update();
   }
 
   @override

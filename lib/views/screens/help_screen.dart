@@ -9,34 +9,38 @@ class HelpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           hasTitle: true, title: "helpcenter", subTitle: "howcawnwehelpyou"),
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(children: [
-              60.verticalSpace,
-              Image.asset("assets/images/help.png", width: 314.w,),
-              40.verticalSpace,
-              HelpWidget(
-                  text: "contact@washly.com",
-                  icon: Boxicons.bx_envelope,
-                  onPress: () {},
-                ),
-                25.verticalSpace,
-              HelpWidget(
-                  text: "(+212) 684 990 001",
-                  icon: Boxicons.bx_phone_call,
-                  onPress: () {},
-                ),
-                25.verticalSpace,
-              HelpWidget(
-                  text: "washly.com",
-                  icon: Boxicons.bx_link_alt,
-                  onPress: () {},
-                ),
-                25.verticalSpace,
-            ]),
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(children: [
+          60.verticalSpace,
+          Image.asset(
+            "assets/images/help.png",
+            width: 314.w,
           ),
+          40.verticalSpace,
+          HelpWidget(
+            text: "contact@washly.com",
+            icon: Boxicons.bx_envelope,
+            onPress: () {},
+          ),
+          25.verticalSpace,
+          HelpWidget(
+            text: "(+212) 684 990 001",
+            icon: Boxicons.bx_phone_call,
+            onPress: () {},
+          ),
+          25.verticalSpace,
+          HelpWidget(
+            text: "washly.com",
+            icon: Boxicons.bx_link_alt,
+            onPress: () {},
+          ),
+          25.verticalSpace,
+        ]),
+      ),
     );
   }
 }

@@ -16,142 +16,111 @@ class ShareWithFriendsScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: CustomAppBar(
-            hasTitle: true, title: "sharewithfriends", subTitle: "sharewithfriends"),
+            hasTitle: true,
+            title: "sharewithfriends",
+            subTitle: "sharewithfriends"),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.h),
           child: Column(
             children: [
               30.verticalSpace,
-            Image.asset('assets/images/sharewithfriends.png'),
-            Text('invitefriends'
-            ,style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w600
-            ),
-          
-          
-            ).tr(),
-            18.verticalSpace,
-             Text('earn'
-            ,style: TextStyle(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w600
-            ),
-          
-          
-            ).tr(),
-            18.verticalSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 50.h, 
-                  width: 150.w,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(26.r),
-                        bottomLeft: Radius.circular(26.r)
-                    ),
-                    border: Border.all(
-                      color: primaryColor,
-                      width: 1
-                    ),
-                    
-                  ),
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text('756HH2',style: TextStyle(
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w500,
-                      color: primaryColor
-                    ),).tr(),
-                  ),
-                  
-                ),
-                 InkWell(
-                    onTap: (){
-                      print('sharecode');
-                    },
-                   child: Container(
-                    height: 50.h, 
+              Image.asset('assets/images/sharewithfriends.png'),
+              Text(
+                'invitefriends',
+                style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.w600),
+              ).tr(),
+              18.verticalSpace,
+              Text(
+                'earn',
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ).tr(),
+              18.verticalSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: 50.h,
                     width: 150.w,
                     decoration: BoxDecoration(
-                      color: primaryColor,
+                      color: Colors.white,
                       borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(26.r),
-                          bottomRight: Radius.circular(26.r)
-                      ),
-                      border: Border.all(
-                        color: primaryColor,
-                        width: 1
-                      ),
-                      
+                          topLeft: Radius.circular(26.r),
+                          bottomLeft: Radius.circular(26.r)),
+                      border: Border.all(color: primaryColor, width: 1),
                     ),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text('sharecode',style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white
-                      ),).tr(),
+                      child: Text(
+                        '756HH2',
+                        style: TextStyle(
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.w500,
+                            color: primaryColor),
+                      ).tr(),
                     ),
-                    
-                                 ),
-                 ),
-              ],
-            ),
-            18.verticalSpace,
-            Container(
-             width:350.w,
-             padding: EdgeInsets.symmetric(horizontal: 10.h),
-
-             decoration:BoxDecoration(  
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(26.r),
-                border: Border.all(
-                  color: borderGreyColor,
-                  width: 1
-                )
-              ),
-              child: Column(
-                children: [
-                  20.verticalSpace,
-                  Text('howitworks'
-                  ,style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400
                   ),
-                
-                 
-                  ).tr(),
-                   20.verticalSpace,
-                  Text('shareyourcode'
-                  ,style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400
+                  InkWell(
+                    onTap: () {
+                      print('sharecode');
+                    },
+                    child: Container(
+                      height: 50.h,
+                      width: 150.w,
+                      decoration: BoxDecoration(
+                        color: primaryColor,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(26.r),
+                            bottomRight: Radius.circular(26.r)),
+                        border: Border.all(color: primaryColor, width: 1),
+                      ),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'sharecode',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.white),
+                        ).tr(),
+                      ),
+                    ),
                   ),
-                
-                
-                  ).tr(),
-                  15.verticalSpace,
-                  Text('earntwenty'
-                  ,style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w400
-                  ),
-                
-                
-                  ).tr(),
-                  20.verticalSpace,
- 
                 ],
               ),
-             
-            )
+              18.verticalSpace,
+              Container(
+                width: 350.w,
+                padding: EdgeInsets.symmetric(horizontal: 10.h),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(26.r),
+                    border: Border.all(color: borderGreyColor, width: 1)),
+                child: Column(
+                  children: [
+                    20.verticalSpace,
+                    Text(
+                      'howitworks',
+                      style: TextStyle(
+                          fontSize: 16.sp, fontWeight: FontWeight.w400),
+                    ).tr(),
+                    20.verticalSpace,
+                    Text(
+                      'shareyourcode',
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    ).tr(),
+                    15.verticalSpace,
+                    Text(
+                      'earntwenty',
+                      style: TextStyle(
+                          fontSize: 14.sp, fontWeight: FontWeight.w400),
+                    ).tr(),
+                    20.verticalSpace,
+                  ],
+                ),
+              )
             ],
           ),
-        )
-    );
+        ));
   }
 }

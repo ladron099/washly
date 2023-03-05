@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:washly/controllers/editPhoneNumberController.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/loading_screen.dart';
+import 'package:washly/views/components/waveLoading.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/reverify_phone_number.dart';
 
@@ -19,7 +20,7 @@ class ChangePhoneNumberScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white, 
         appBar: CustomAppBar(
             hasTitle: true,
             title: 'changephonenumber',
@@ -28,8 +29,7 @@ class ChangePhoneNumberScreen extends StatelessWidget {
             init: ChangePhoneNumberController(),
             builder: (controller) {
               return controller.loading.value
-                  ? LoadingScreen(
-                      loading: false, child: Center(child: Text("loading")))
+                  ? WaveLoadingScreen()
                   : Container(
                       width: 375.w,
                       padding: EdgeInsets.symmetric(horizontal: 20.w),

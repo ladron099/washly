@@ -17,10 +17,10 @@ class CompleteOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-        appBar: CustomAppBar(
-            hasTitle: true, title: "services", subTitle: "chooseyourservice"),
-            body: GetBuilder<CompleteOrderController>(
+      backgroundColor: Colors.white, 
+      appBar: CustomAppBar(
+          hasTitle: true, title: "services", subTitle: "chooseyourservice"),
+      body: GetBuilder<CompleteOrderController>(
           init: CompleteOrderController(),
           builder: (controller) {
             return ScrollConfiguration(
@@ -29,8 +29,6 @@ class CompleteOrderScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     22.verticalSpace,
-                  
-                    
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: CarWidget(
@@ -113,19 +111,22 @@ class CompleteOrderScreen extends StatelessWidget {
                                 onTap: () {
                                   controller.isCashSelected = true;
                                   controller.isCardSelected = false;
-                                  controller.isWahslyCoinsSelected=false;
+                                  controller.isWahslyCoinsSelected = false;
                                   controller.update();
                                 },
                                 child: Row(
                                   children: [
                                     Container(
-                                      height:13.w ,
+                                      height: 13.w,
                                       width: 13.w,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(50.r),
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
                                         border: Border.all(
-                                          color: controller.isCashSelected? primaryColor:borderGreyColor,
+                                          color: controller.isCashSelected
+                                              ? primaryColor
+                                              : borderGreyColor,
                                           width: 3.w,
                                         ),
                                       ),
@@ -142,23 +143,26 @@ class CompleteOrderScreen extends StatelessWidget {
                                 ),
                               ),
                               20.verticalSpace,
-                               InkWell(
+                              InkWell(
                                 onTap: () {
                                   controller.isCashSelected = false;
                                   controller.isCardSelected = true;
-                                  controller.isWahslyCoinsSelected=false;
+                                  controller.isWahslyCoinsSelected = false;
                                   controller.update();
                                 },
                                 child: Row(
                                   children: [
                                     Container(
-                                      height:13.w ,
+                                      height: 13.w,
                                       width: 13.w,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(50.r),
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
                                         border: Border.all(
-                                          color: controller.isCardSelected? primaryColor:borderGreyColor,
+                                          color: controller.isCardSelected
+                                              ? primaryColor
+                                              : borderGreyColor,
                                           width: 3.w,
                                         ),
                                       ),
@@ -182,26 +186,28 @@ class CompleteOrderScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                             20.verticalSpace,
-                               InkWell(
-                                
-
+                              20.verticalSpace,
+                              InkWell(
                                 onTap: () {
                                   controller.isCashSelected = false;
                                   controller.isCardSelected = false;
-                                  controller.isWahslyCoinsSelected=true;
+                                  controller.isWahslyCoinsSelected = true;
                                   controller.update();
                                 },
                                 child: Row(
                                   children: [
                                     Container(
-                                      height:13.w ,
+                                      height: 13.w,
                                       width: 13.w,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
-                                        borderRadius: BorderRadius.circular(50.r),
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
                                         border: Border.all(
-                                          color: controller.isWahslyCoinsSelected? primaryColor:borderGreyColor,
+                                          color:
+                                              controller.isWahslyCoinsSelected
+                                                  ? primaryColor
+                                                  : borderGreyColor,
                                           width: 3.w,
                                         ),
                                       ),
@@ -225,7 +231,6 @@ class CompleteOrderScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                             
                             ],
                           ),
                         ],
@@ -259,18 +264,19 @@ class CompleteOrderScreen extends StatelessWidget {
                               ),
                             ).tr(),
                           ),
-                          
                         ],
                       ),
                     ),
-                   18.verticalSpace,
-                                 
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20.h),
-                                  child: TextFieldPrimary(hint: 'coupon', inputIcon: Icon(Boxicons.bxs_coupon), visible: false),
-                                ),
-                                15.verticalSpace,
-                                Container(
+                    18.verticalSpace,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.h),
+                      child: TextFieldPrimary(
+                          hint: 'coupon',
+                          inputIcon: Icon(Boxicons.bxs_coupon),
+                          visible: false),
+                    ),
+                    15.verticalSpace,
+                    Container(
                       width: double.infinity,
                       height: 2.h,
                       color: primaryColor,
@@ -280,7 +286,8 @@ class CompleteOrderScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 20.w),
                       child: InkWell(
                         onTap: () {
-                          controller.isCheckBoxSelected=!controller.isCheckBoxSelected;
+                          controller.isCheckBoxSelected =
+                              !controller.isCheckBoxSelected;
                           controller.update();
                         },
                         child: Row(
@@ -290,49 +297,54 @@ class CompleteOrderScreen extends StatelessWidget {
                               height: 19.w,
                               decoration: BoxDecoration(
                                 color: Colors.white,
-                                border:Border.all(color: controller.isCheckBoxSelected?primaryColor:borderGreyColor,width: 4.w),
+                                border: Border.all(
+                                    color: controller.isCheckBoxSelected
+                                        ? primaryColor
+                                        : borderGreyColor,
+                                    width: 4.w),
                                 borderRadius: BorderRadius.circular(6.r),
-                              ), 
-                            
+                              ),
                             ),
                             10.horizontalSpace,
-                            Text('iwillbepresent',
-                            style: TextStyle(
-                              color:  controller.isCheckBoxSelected?primaryColor:borderGreyColor,
-                              fontSize: 15.sp,
-                            ),).tr(),
+                            Text(
+                              'iwillbepresent',
+                              style: TextStyle(
+                                color: controller.isCheckBoxSelected
+                                    ? primaryColor
+                                    : borderGreyColor,
+                                fontSize: 15.sp,
+                              ),
+                            ).tr(),
                             5.horizontalSpace,
-                            Icon(Boxicons.bx_info_circle,size:15.sp,color: borderGreyColor)
+                            Icon(Boxicons.bx_info_circle,
+                                size: 15.sp, color: borderGreyColor)
                           ],
                         ),
                       ),
                     ),
-                              
-                                80.verticalSpace,
-                                SizedBox(
-                                    width: 260.w,
-                                    height: 49.h,
-                                    child: PrimaryButton(
-                                      reverse: false,
-                                        text: "next",
-                                        color: primaryColor,
-                                        onpress: () {
-                                       if(controller.isCheckBoxSelected==false){
-                                          Get.snackbar("error", "Please check the box",snackPosition: SnackPosition.BOTTOM,colorText: redColor);
-                                       }else{
-                                          Get.to(
-                                            () => ReviewCheckOutScreen(),
-                                            transition: Transition.rightToLeft
-                                          );
-                                       }
-                                        })), 
-                 
+                    80.verticalSpace,
+                    SizedBox(
+                        width: 260.w,
+                        height: 49.h,
+                        child: PrimaryButton(
+                            reverse: false,
+                            text: "next",
+                            color: primaryColor,
+                            onpress: () {
+                              if (controller.isCheckBoxSelected == false) {
+                                Get.snackbar("error", "Please check the box",
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    colorText: redColor);
+                              } else {
+                                Get.to(() => ReviewCheckOutScreen(),
+                                    transition: Transition.rightToLeft);
+                              }
+                            })),
                   ],
                 ),
               ),
             );
           }),
-  
     );
   }
 }

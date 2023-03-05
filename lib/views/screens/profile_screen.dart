@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:washly/controllers/profileScreenController.dart';
 import 'package:washly/utils/services.dart';
 import 'package:washly/views/components/loading_screen.dart';
+import 'package:washly/views/components/waveLoading.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/edit_password_screen.dart';
 import 'package:washly/views/screens/edit_phone_number_screen.dart';
@@ -24,10 +25,7 @@ class ProfileScreen extends StatelessWidget {
         init: ProfileScreenController(),
         builder: (controller) {
           return controller.loading.value
-              ? LoadingScreen(
-                  loading: controller.loading.value,
-                  child: Container(),
-                )
+              ? WaveLoadingScreen()
               : Scaffold(
                   appBar: CustomAppBar(
                       hasTitle: true,

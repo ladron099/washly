@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
-import 'package:washly/views/components/widgets.dart'; 
+import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/services_screen.dart';
 
 import '../../controllers/enterAdressController.dart';
 import '../components/loading_screen.dart';
+import '../components/waveLoading.dart';
 
 class EneterAddressScreen extends StatelessWidget {
   const EneterAddressScreen({super.key});
@@ -19,6 +20,7 @@ class EneterAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GetBuilder<EnterAddressController>(
           init: EnterAddressController(),
           builder: (controller) {
@@ -30,21 +32,21 @@ class EneterAddressScreen extends StatelessWidget {
                     child: Stack(
                       children: [
                         Container(
-                            child: LoadingScreen(
-                                loading: controller.loading.value,
-                                child: GoogleMap(
-                                  mapType: MapType.normal,
-                                  myLocationEnabled: true,
-                                  initialCameraPosition:
-                                      controller.kGooglePlex!,
-                                  markers: controller.markers,
-                                  myLocationButtonEnabled: false,
-                                  zoomControlsEnabled: false,
-                                  onMapCreated: (onMapCreated) {
-                                    controller.mapController
-                                        .complete(onMapCreated);
-                                  },
-                                ))),
+                            child: controller.loading.value
+                                ? WaveLoadingScreen()
+                                : GoogleMap(
+                                    mapType: MapType.normal,
+                                    myLocationEnabled: true,
+                                    initialCameraPosition:
+                                        controller.kGooglePlex!,
+                                    markers: controller.markers,
+                                    myLocationButtonEnabled: false,
+                                    zoomControlsEnabled: false,
+                                    onMapCreated: (onMapCreated) {
+                                      controller.mapController
+                                          .complete(onMapCreated);
+                                    },
+                                  )),
                         InkWell(
                           onTap: () {
                             Get.back();

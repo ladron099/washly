@@ -44,8 +44,8 @@ class WelcomeScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 54.w),
             child: PrimaryButton(
                 onpress: () async {
-                   await GetStorage().write("isFirstTime", true);
-                  Get.to(()=> LoginScreen());
+                  await GetStorage().write("isFirstTime", true);
+                  Get.to(() => LoginScreen());
                 },
                 text: "getstarted"),
           )

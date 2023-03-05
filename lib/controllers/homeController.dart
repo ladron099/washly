@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/utils.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:washly/utils/models/user.dart';
 import 'package:washly/utils/quires.dart';
 
@@ -28,8 +29,11 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    getUser().then((value) {
+    getUser().then((value) async {
       client = value;
+         await GetStorage().write('user_status', 'verified');
+          client!.client_status = 'verified';
+          
       saveCurrentUser(value);
       if (client!.client_city.isEmpty ||
           client!.client_date_naissance.isEmpty ||
@@ -46,6 +50,7 @@ class HomeController extends GetxController {
           duration: Duration(seconds: 8),
         );
       }
+
       update();
     });
     checkGreetingTime();

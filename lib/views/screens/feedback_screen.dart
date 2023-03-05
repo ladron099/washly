@@ -14,14 +14,14 @@ class FeedbackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, 
       appBar: CustomAppBar(
           hasTitle: true, title: "feedback", subTitle: "rateourservice"),
       body: SafeArea(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: Column(
-        children: [
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Column(
+          children: [
             40.verticalSpace,
             Text(
               "ratetext",
@@ -32,7 +32,8 @@ class FeedbackScreen extends StatelessWidget {
             Container(
               height: 106.h,
               decoration: BoxDecoration(
-                  color: primaryColor, borderRadius: BorderRadius.circular(12.r)),
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(12.r)),
               padding: EdgeInsets.symmetric(horizontal: 6.w),
               child: Row(
                 children: [
@@ -112,13 +113,16 @@ class FeedbackScreen extends StatelessWidget {
             ),
             120.verticalSpace,
             Container(
-              width: 300.w,
-              child: PrimaryButton(text: "done", onpress: () {
-                Get.offAll(()=>HomeScreen(), transition: Transition.rightToLeft);
-              }))
-        ],
-      ),
-          )),
+                width: 300.w,
+                child: PrimaryButton(
+                    text: "done",
+                    onpress: () {
+                      Get.offAll(() => HomeScreen(),
+                          transition: Transition.rightToLeft);
+                    }))
+          ],
+        ),
+      )),
     );
   }
 }

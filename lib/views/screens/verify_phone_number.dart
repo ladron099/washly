@@ -10,6 +10,8 @@ import 'package:washly/utils/constants.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/congrats_screen.dart';
 
+import '../components/waveLoading.dart';
+
 class VerifyPhoneScreen extends StatelessWidget {
   const VerifyPhoneScreen({super.key});
 
@@ -18,7 +20,7 @@ class VerifyPhoneScreen extends StatelessWidget {
     return GetBuilder<VerifyPhoneController>(
       init: VerifyPhoneController(),
       builder: (controller) {
-        return Scaffold(
+        return controller.loading.value?WaveLoadingScreen(): Scaffold(
           backgroundColor: Colors.white,
           extendBodyBehindAppBar: true,
           appBar: CustomAppBar(),

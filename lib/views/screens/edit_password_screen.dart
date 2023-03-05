@@ -6,6 +6,7 @@ import 'package:washly/controllers/changePasswordController.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/services.dart';
 import 'package:washly/views/components/loading_screen.dart';
+import 'package:washly/views/components/waveLoading.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -18,8 +19,7 @@ class ChangePasswordScreen extends StatelessWidget {
         init: ChangePasswordController(),
         builder: (controller) {
           return controller.loading.value
-              ? LoadingScreen(
-                  loading: controller.loading.value, child: Container())
+              ? WaveLoadingScreen()
               : Scaffold(
                   backgroundColor: Colors.white,
                   appBar: CustomAppBar(

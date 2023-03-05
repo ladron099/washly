@@ -12,7 +12,7 @@ class CongratsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.white, 
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,12 +27,12 @@ class CongratsScreen extends StatelessWidget {
             child: Image(image: AssetImage('assets/images/waitingback.png')),
           ),
           38.verticalSpace,
-          Center( 
+          Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 60.w),
               child: Text(
                 'wearehappy',
-                textAlign: TextAlign.center ,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 30.sp,
                   fontWeight: FontWeight.bold,
@@ -47,8 +47,9 @@ class CongratsScreen extends StatelessWidget {
               child: PrimaryButton(
                   text: "next",
                   onpress: () {
-                    Get.to(() => HomeScreen(), transition: Transition.rightToLeft);
-                            })),
+                    Get.to(() => HomeScreen(),
+                        transition: Transition.rightToLeft);
+                  })),
           23.verticalSpace,
         ],
       ),

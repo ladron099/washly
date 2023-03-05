@@ -18,6 +18,7 @@ class ChooseCarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(
           hasTitle: true,
           title: "chooseaveichle",
@@ -38,7 +39,8 @@ class ChooseCarScreen extends StatelessWidget {
                   SlidableAction(
                     // An action can be bigger than the others.
                     onPressed: (value) {
-                      Get.to(() => EditCarScreen(), transition: Transition.rightToLeft);
+                      Get.to(() => EditCarScreen(),
+                          transition: Transition.rightToLeft);
                     },
                     backgroundColor: primaryColor,
                     foregroundColor: Colors.white,
@@ -122,7 +124,8 @@ class ChooseCarScreen extends StatelessWidget {
           child: FittedBox(
               child: FloatingActionButton(
                   onPressed: () {
-                    Get.to(() => NewCarScreen(), transition: Transition.rightToLeft);
+                    Get.to(() => NewCarScreen(),
+                        transition: Transition.rightToLeft);
                   },
                   elevation: 0,
                   child: Icon(

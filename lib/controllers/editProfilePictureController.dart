@@ -48,13 +48,18 @@ class EditProfilePictureController extends GetxController {
         p0.ref.getDownloadURL().then((value) async {
           fileName = value;
           userBase!.client_picture = fileName;
+             userBase!.client_status = 'verified';
+              saveCurrentUser(userBase!);
           await saveCurrentUser(userBase!);
           await completeUser(userBase!).then((value) {
             if (value) {
               profileController.client = userBase;
               profileController.update();
               homeController.client = userBase;
+              
               GetStorage().write('user_status', 'verified');
+              userBase!.client_status = 'verified';
+              saveCurrentUser(userBase!);
               homeController.update();
               Get.snackbar('Success', 'Picture had been updated successfully.');
             }

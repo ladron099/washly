@@ -10,6 +10,7 @@ import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/dialogs.dart';
 import 'package:washly/views/components/loading_screen.dart';
+import 'package:washly/views/components/waveLoading.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:washly/views/screens/forget_password_screen.dart';
 import 'package:washly/views/screens/home_screen.dart';
@@ -27,161 +28,79 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Obx(() {
-          return LoadingScreen(
-            loading: controller.loading.value,
-            child: SingleChildScrollView(
-              child: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    83.verticalSpace,
-                    Container(
-                        height: 62.h,
-                        child: Center(
-                          child: const Image(
-                              image: AssetImage('assets/images/rlogo.png')),
-                        )),
-                    40.verticalSpace,
-                    Center(
+          return controller.loading.value?WaveLoadingScreen(): SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  83.verticalSpace,
+                  Container(
+                      height: 62.h,
+                      child: Center(
+                        child: const Image(
+                            image: AssetImage('assets/images/rlogo.png')),
+                      )),
+                  40.verticalSpace,
+                  Center(
+                    child: Text(
+                      'Washly',
+                      style: TextStyle(
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  34.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 83.w),
+                    child: Center(
                       child: Text(
-                        'Washly',
+                        'enteraccountinfo',
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 32.sp,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp,
                           color: Colors.black,
                         ),
-                      ),
+                      ).tr(),
                     ),
-                    34.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 83.w),
-                      child: Center(
-                        child: Text(
-                          'enteraccountinfo',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            color: Colors.black,
-                          ),
-                        ).tr(),
-                      ),
+                  ),
+                  30.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: TextFieldPrimary(
+                      controller: controller.emailController,
+                      visible: false,
+                      hint: "email",
+                      inputIcon: Icon(Boxicons.bx_envelope),
+                      validator: (text) {},
                     ),
-                    30.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: TextFieldPrimary(
-                        controller: controller.emailController,
-                        visible: false,
-                        hint: "email",
-                        inputIcon: Icon(Boxicons.bx_envelope),
-                        validator: (text) {},
-                      ),
+                  ),
+                  25.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: TextFieldPrimary(
+                      controller: controller.passwordController,
+                      visible: true,
+                      hint: "password",
+                      inputIcon: Icon(Boxicons.bx_lock_alt),
                     ),
-                    25.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: TextFieldPrimary(
-                        controller: controller.passwordController,
-                        visible: true,
-                        hint: "password",
-                        inputIcon: Icon(Boxicons.bx_lock_alt),
-                      ),
-                    ),
-                    15.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.to(() => ForgetPasswordScreen(),
-                                  transition: Transition.rightToLeft);
-                            },
-                            child: Text(
-                              'forgetpassword',
-                              style: TextStyle(
-                                fontSize: 15.sp,
-                                color: primaryColor,
-                              ),
-                            ).tr(),
-                          ),
-                        ],
-                      ),
-                    ),
-                    20.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: PrimaryButton(
-                        onpress: () async {
-                            // await GetStorage().write("isLoggedIn", true);
-                            // Get.to(() => HomeScreen(),
-                            //     transition: Transition.rightToLeft);
-                            controller.validate();
-                          
-                        },
-                        text: 'login',
-                      ),
-                    ),
-                    20.verticalSpace,
-                    Container(
-                      height: 2.h,
-                      color: borderGreyColor,
-                    ),
-                    20.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: PrimaryButton(
-                        color: Colors.red,
-                        icon: Icon(
-                          FontAwesomeIcons.googlePlusG,
-                          color: Colors.white,
-                          size: 22.sp,
-                        ),
-                        onpress: () {
-                          controller.signInWithGoogle(context);
-                        },
-                        text: 'loginggle',
-                      ),
-                    ),
-                    20.verticalSpace,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: PrimaryButton(
-                        color: Color(0xFF2B468E),
-                        icon: Icon(
-                          FontAwesomeIcons.facebookF,
-                          color: Colors.white,
-                          size: 22.sp,
-                        ),
-                        onpress: () {
-                          controller.signInWithFacebook(context);
-                        },
-                        text: 'loginfb',
-                      ),
-                    ),
-                    30.verticalSpace,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  15.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          "donthaveaccount",
-                          style: TextStyle(
-                            fontSize: 15.sp,
-                            color: Colors.black,
-                          ),
-                        ).tr(),
-                        5.horizontalSpace,
                         InkWell(
                           onTap: () {
-                            Get.to(
-                              () => RegisterScreen(),
-                            );
+                            Get.to(() => ForgetPasswordScreen(),
+                                transition: Transition.rightToLeft);
                           },
                           child: Text(
-                            'signup',
+                            'forgetpassword',
                             style: TextStyle(
                               fontSize: 15.sp,
                               color: primaryColor,
@@ -190,9 +109,88 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    30.verticalSpace,
-                  ],
-                ),
+                  ),
+                  20.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: PrimaryButton(
+                      onpress: () async {
+                          // await GetStorage().write("isLoggedIn", true);
+                          // Get.to(() => HomeScreen(),
+                          //     transition: Transition.rightToLeft);
+                          controller.validate();
+                        
+                      },
+                      text: 'login',
+                    ),
+                  ),
+                  20.verticalSpace,
+                  Container(
+                    height: 2.h,
+                    color: borderGreyColor,
+                  ),
+                  20.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: PrimaryButton(
+                      color: Colors.red,
+                      icon: Icon(
+                        FontAwesomeIcons.googlePlusG,
+                        color: Colors.white,
+                        size: 22.sp,
+                      ),
+                      onpress: () {
+                        controller.signInWithGoogle(context);
+                      },
+                      text: 'loginggle',
+                    ),
+                  ),
+                  20.verticalSpace,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
+                    child: PrimaryButton(
+                      color: Color(0xFF2B468E),
+                      icon: Icon(
+                        FontAwesomeIcons.facebookF,
+                        color: Colors.white,
+                        size: 22.sp,
+                      ),
+                      onpress: () {
+                        controller.signInWithFacebook(context);
+                      },
+                      text: 'loginfb',
+                    ),
+                  ),
+                  30.verticalSpace,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "donthaveaccount",
+                        style: TextStyle(
+                          fontSize: 15.sp,
+                          color: Colors.black,
+                        ),
+                      ).tr(),
+                      5.horizontalSpace,
+                      InkWell(
+                        onTap: () {
+                          Get.to(
+                            () => RegisterScreen(),
+                          );
+                        },
+                        child: Text(
+                          'signup',
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: primaryColor,
+                          ),
+                        ).tr(),
+                      ),
+                    ],
+                  ),
+                  30.verticalSpace,
+                ],
               ),
             ),
           );

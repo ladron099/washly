@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/views/screens/on_road_order_screen.dart';
 import 'package:washly/views/screens/start_command_screen.dart';
@@ -13,6 +14,7 @@ class SearchingScrubberScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         width: 375.w,
         child: Column(children: [
@@ -35,21 +37,6 @@ class SearchingScrubberScreen extends StatelessWidget {
             width: 250.w,
           ),
           40.verticalSpace,
-          InkWell(
-            onTap: () => Get.to(() => OnRoadOrderScreen(),
-                transition:
-                    Transition.rightToLeft), //exitReasonDialog(context),
-            child: Container(
-              alignment: Alignment.center,
-              height: 50.h,
-              color: redColor,
-              width: 375.w,
-              child: Text(
-                "cancel",
-                style: TextStyle(color: Colors.white, fontSize: 15.sp),
-              ).tr(),
-            ),
-          ),
           Expanded(
               child: Container(
                   alignment: Alignment.center,
@@ -156,7 +143,15 @@ class SearchingScrubberScreen extends StatelessWidget {
                                   color: Colors.white),
                             )
                           ],
-                        )
+                        ),
+                        20.verticalSpace,
+                        PrimaryButton(
+                            color: redColor,
+                            text: "cancel",
+                            onpress: () {
+                              Get.to(() => OnRoadOrderScreen(),
+                                  transition: Transition.rightToLeft);
+                            })
                       ],
                     ),
                   ))),

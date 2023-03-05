@@ -28,7 +28,7 @@ Future<String> isUserExist(email) async {
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
+    // if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
   });
 
   return provider;

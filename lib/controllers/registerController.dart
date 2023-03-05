@@ -25,7 +25,7 @@ class RegisterController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  TextEditingController cityController = TextEditingController(); 
+  TextEditingController cityController = TextEditingController();
   String? gender;
   DateTime? birthdate;
   List<DropdownMenuItem<ListItem>>? dropdownSexeItems;
@@ -62,8 +62,8 @@ class RegisterController extends GetxController {
         update();
         await isUserExist(emailController.text.trim()).then((value) {
           if (value != "") {
-            showAlertDialogOneButton(Get.context!, "Email already exists",
-                "Enter a new email.", "Ok");
+         Get.snackbar("Error", "Email is already used",
+          backgroundColor: Colors.red, colorText: Colors.white);
             return;
           } else {
             FirebaseAuth.instance
@@ -135,48 +135,49 @@ class RegisterController extends GetxController {
 
   Future<bool> validate() {
     if (firstNameController.text.trim().isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "first name empty", "Enter your first name.", "Ok");
+      Get.snackbar("Error", "Enter your first name.",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (lastNameController.text.trim().isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "last name empty", "Enter your last name.", "Ok");
+      Get.snackbar("Error", "Enter your last name.",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (emailController.text.trim().isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "email empty", "Enter your email.", "Ok");
+      Get.snackbar("Error", "Email is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (!EmailValidator.validate(emailController.text.trim())) {
-      showAlertDialogOneButton(
-          Get.context!, "Email invalid", "Enter a valid email.", "Ok");
+      Get.snackbar("Error", "Enter a valid email address.",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (!validator.password(passwordController.text)) {
-      showAlertDialogOneButton(
-          Get.context!, "Password invalid", "Enter a valid password.", "Ok");
+      Get.snackbar("Error",
+          "Password must be at least 8 characters with numbers and special characters.",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (passwordController.text.isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "password empty", "Enter your password.", "Ok");
+      Get.snackbar("Error", "Password is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     if (cityController.text.isEmpty) {
-      showAlertDialogOneButton(
-          Get.context!, "city empty", "Enter your city.", "Ok");
+      Get.snackbar("Error", "City is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
-    if(birthdate==null) {
-       showAlertDialogOneButton(
-          Get.context!, "birthdate empty", "Enter your birthdate.", "Ok");
+    if (birthdate == null) {
+      Get.snackbar("Error", "Birthdate is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
-    if(gender==null){
-       showAlertDialogOneButton(
-          Get.context!, "gender empty", "Enter your gender.", "Ok");
+    if (gender == null) {
+      Get.snackbar("Error", "Sexe field is required",
+          backgroundColor: Colors.red, colorText: Colors.white);
       return Future.value(false);
     }
     return Future.value(true);

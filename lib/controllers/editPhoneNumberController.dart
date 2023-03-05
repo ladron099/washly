@@ -57,7 +57,8 @@ class ChangePhoneNumberController extends GetxController {
                       TmpUser.fromJson(await SessionManager().get("tmpUser"));
                   tmpUser.phoneNo = indicatif + phone.text;
                   await SessionManager().set("tmpUser", tmpUser);
-                   GetStorage().write('user_status', 'verified');
+                  GetStorage().write('user_status', 'verified');
+                  userBase!.client_status = 'verified';
                   Get.to(() => ReverifyPhoneScreen(),
                       arguments: verificationId,
                       transition: Transition.rightToLeft);
@@ -101,11 +102,13 @@ class ChangePhoneNumberController extends GetxController {
 
   @override
   Future<void> onInit() async {
-     GetStorage().write('user_status', 'verified');
+    GetStorage().write('user_status', 'verified');
     loading.toggle();
     update();
     await getUserFromMemory().then((value) {
       userBase = value;
+      userBase!.client_status = 'verified';
+      saveCurrentUser(userBase!);
     });
     loading.toggle();
     update();

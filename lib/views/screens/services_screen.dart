@@ -14,7 +14,7 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white, 
         appBar: CustomAppBar(
             hasTitle: true, title: "services", subTitle: "chooseyourservice"),
         body: GetBuilder<ServicesController>(
@@ -126,14 +126,14 @@ class ServicesScreen extends StatelessWidget {
                         child: PrimaryButton(
                             text: 'next',
                             onpress: () {
-                            if(controller.currIndex==null){
-                              Get.snackbar("Error", "Please select a service");
-
-                            }else{
+                              if (controller.currIndex == null) {
+                                Get.snackbar(
+                                    "Error", "Please select a service");
+                              } else {
                                 Get.to(() => CompleteOrderScreen(),
-                                  transition: Transition.rightToLeft,
-                                  duration: Duration(milliseconds: 500));
-                            }
+                                    transition: Transition.rightToLeft,
+                                    duration: Duration(milliseconds: 500));
+                              }
                             }))
                   ],
                 ),
