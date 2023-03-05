@@ -6,8 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
-import 'package:washly/views/components/widgets.dart';
-import 'package:washly/views/screens/loading_screen.dart';
+import 'package:washly/views/components/widgets.dart'; 
 import 'package:washly/views/screens/services_screen.dart';
 
 import '../../controllers/enterAdressController.dart';

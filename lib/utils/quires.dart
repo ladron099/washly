@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:washly/utils/models/user.dart';
 
 Future<String> isUserExist(email) async {
@@ -27,7 +28,7 @@ Future<String> isUserExist(email) async {
       .first
       .then((value) async {
     List<DocumentSnapshot> documentSnapshot = value.docs;
-    if (value.size != 0) provider = documentSnapshot[0]['washer_type_auth'];
+    if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
   });
 
   return provider;
@@ -40,7 +41,8 @@ Future completeUser(Client user) async {
   return true;
 }
 
-Future<Client> getUser(uid) async {
+Future<Client> getUser() async {
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   Client user;
   var docSnapshot =
       await FirebaseFirestore.instance.collection('users').doc(uid).get();
@@ -103,7 +105,7 @@ Future<String> checkPhoneNumber(phoneNo) async {
   await FirebaseFirestore.instance
       .collection('washers')
       .where('washer_phone_number', isEqualTo: phoneNo)
-      .where('washer_type_auth', whereIn: ["Phone", "Facebook", "Google"])
+      .where('washer_auth_type', whereIn: ["Phone", "Facebook", "Google"])
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first

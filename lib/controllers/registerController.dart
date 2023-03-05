@@ -114,6 +114,7 @@ class RegisterController extends GetxController {
                   ),
                 );
                 GetStorage().write('user_status', 'profile');
+                client.client_status = 'profile';
                 await SessionManager().set('currentUser', client);
                 await createUser(client).then(
                   (value) async {

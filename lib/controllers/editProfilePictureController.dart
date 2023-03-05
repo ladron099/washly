@@ -2,18 +2,25 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:washly/utils/services.dart';
-
-import '../utils/models/user.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:washly/controllers/homeController.dart';
+import 'package:washly/controllers/profileScreenController.dart';
+import 'package:washly/utils/models/user.dart';
+import 'package:washly/utils/services.dart';
+import 'package:washly/views/screens/home_screen.dart';
 
 import '../utils/quires.dart';
 import '../views/screens/phone_screen.dart';
 
-class ProfilePictureController extends GetxController {
-  Client? userBase;
+class EditProfilePictureController extends GetxController {
+  final profileController = Get.put(ProfileScreenController());
+  final homeController = Get.put(HomeController());
   RxBool loading = false.obs;
+  Client? userBase;
   XFile? file;
   File? image;
 
@@ -40,14 +47,16 @@ class ProfilePictureController extends GetxController {
           .then((p0) {
         p0.ref.getDownloadURL().then((value) async {
           fileName = value;
-          print("$value this nit");
           userBase!.client_picture = fileName;
-          print(fileName + "this is this is");
           await saveCurrentUser(userBase!);
           await completeUser(userBase!).then((value) {
             if (value) {
-              GetStorage().write('user_status', 'new');
-              Get.offAll(() => PhoneScreen());
+              profileController.client = userBase;
+              profileController.update();
+              homeController.client = userBase;
+              GetStorage().write('user_status', 'verified');
+              homeController.update();
+              Get.snackbar('Success', 'Picture had been updated successfully.');
             }
             loading.toggle();
             update();

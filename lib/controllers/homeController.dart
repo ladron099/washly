@@ -1,11 +1,17 @@
+import 'dart:async';
+
+import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/utils.dart';
 import 'package:washly/utils/models/user.dart';
+import 'package:washly/utils/quires.dart';
 
 import '../utils/services.dart';
+import '../views/screens/edit_profile_screen.dart';
 
 class HomeController extends GetxController {
-  RxBool loading = false.obs;
+  RxBool loading = true.obs;
   Client? client;
   String? greeting;
   checkGreetingTime() {
@@ -22,15 +28,32 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    loading.toggle();
-    update();
-    super.onInit();
-    getUserFromMemory().then((value) {
+    getUser().then((value) {
       client = value;
+      saveCurrentUser(value);
+      if (client!.client_city.isEmpty ||
+          client!.client_date_naissance.isEmpty ||
+          client!.client_sexe.isEmpty) {
+        Get.snackbar(
+          "complete profile",
+          "Please go to your profile settings to complete your profile or you can click here",
+          onTap: (snack) {
+            Get.to(
+              () => EditInfoScreen(),
+              transition: Transition.rightToLeft,
+            );
+          },
+          duration: Duration(seconds: 8),
+        );
+      }
       update();
     });
     checkGreetingTime();
-    loading.toggle();
-    update();
+    Timer(Duration(seconds: 1), () {
+      loading.toggle();
+      update();
+    });
+
+    super.onInit();
   }
 }

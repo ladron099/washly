@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await FacebookAuth.instance.webAndDesktopInitialize(
     appId: facebookKey,
     cookie: true,
@@ -52,7 +55,7 @@ void main() async {
                 ),
             primaryColor: primaryColor,
           ),
-          home: ProfilePictureScreen(), 
+          home: main,
         );
       },
     ),

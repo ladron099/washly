@@ -1,10 +1,11 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart'; 
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:washly/controllers/EditInfoController.dart';
 import 'package:washly/utils/buttons.dart';
+import 'package:washly/views/components/loading_screen.dart';
 import 'package:washly/views/components/widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -24,103 +25,96 @@ class EditInfoScreen extends StatelessWidget {
         body: Container(
             width: 375.w,
             padding: EdgeInsets.symmetric(horizontal: 20.w),
-            child: ScrollConfiguration(
-                behavior: MyBehavior(),
-                child: SingleChildScrollView(
-                    child: GetBuilder<EditInfoController>(
-                      init: EditInfoController(),
-                      builder: (controller) {
-                        return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                        30.verticalSpace,
-                        Text(
-                          "maininformations",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.w500),
-                        ).tr(),
-                        20.verticalSpace,
-                        TextFieldPrimary(
-                            hint: 'firstname'.tr(),
-                            inputIcon: Icon(Boxicons.bx_user),
-                            visible: false),
-                        20.verticalSpace,
-                        TextFieldPrimary(
-                            hint: 'lastname'.tr(),
-                            inputIcon: Icon(Boxicons.bx_user),
-                            visible: false),
-                        20.verticalSpace,
-                        TextFieldPrimary(
-                            hint: 'email'.tr(),
-                            inputIcon: Icon(Boxicons.bx_envelope),
-                            visible: false),
-                        30.verticalSpace,
+            child: GetBuilder<EditInfoController>(
+                init: EditInfoController(),
+                builder: (controller) {
+                  return LoadingScreen(
+                    loading: controller.loading.value,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          30.verticalSpace,
                           Text(
-                          "additionnalinfo",
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontSize: 16.sp, fontWeight: FontWeight.w500),
-
+                            "maininformations",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.w500),
                           ).tr(),
-                             20.verticalSpace,
-                        TextFieldPrimary(
-                            hint: 'city'.tr(),
-                            inputIcon: Icon(Boxicons.bx_home),
-                            visible: false),
-                             20.verticalSpace,
-                        TextFieldPrimary(
-                            hint: 'address'.tr(),
-                            inputIcon: Icon(Boxicons.bx_home),
-                            visible: false),
-                            20.verticalSpace,
-                               GetBuilder<EditInfoController>(
-                              init: EditInfoController(),
-                              builder: (value) => DropDownMenu(
-                                items: controller.dropdownSexeItems,
-                                listItem: controller.sexe,
-                                function: (value) {
-                                  controller.dropDownMenuChange(value);
-                                  controller.update();
-                                },
-                              ),
-                            ),
-                            20.verticalSpace,
-                              GetBuilder<EditInfoController>(
-                          init: EditInfoController(),
-                          builder: (value) => InputDatePicker(
+                          20.verticalSpace,
+                          TextFieldPrimary(
+                              controller: controller.firstNameController,
+                              hint: 'firstname'.tr(),
+                              inputIcon: Icon(Boxicons.bx_user),
+                              visible: false),
+                          20.verticalSpace,
+                          TextFieldPrimary(
+                              controller: controller.lastNameController,
+                              hint: 'lastname'.tr(),
+                              inputIcon: Icon(Boxicons.bx_user),
+                              visible: false),
+                          20.verticalSpace,
+                          TextFieldPrimary(
+                              enabled: false,
+                              controller: controller.emailController,
+                              hint: 'email'.tr(),
+                              inputIcon: Icon(Boxicons.bx_envelope),
+                              visible: false),
+                          30.verticalSpace,
+                          Text(
+                            "additionnalinfo",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                                fontSize: 16.sp, fontWeight: FontWeight.w500),
+                          ).tr(),
+                          20.verticalSpace,
+                          TextFieldPrimary(
+                              controller: controller.cityController,
+                              hint: 'city'.tr(),
+                              inputIcon: Icon(Boxicons.bx_home),
+                              visible: false),
+                          20.verticalSpace,
+                          DropDownMenu(
+                            items: controller.dropdownSexeItems,
+                            listItem: controller.sexe,
+                            function: (value) {
+                              controller.dropDownMenuChange(value);
+                              controller.update();
+                            },
+                          ),
+                          20.verticalSpace,
+                          InputDatePicker(
                             dateText: controller.birthday,
                             icon: Boxicons.bx_calendar,
                             function: () => DatePicker.showDatePicker(
                               context,
-                              showTitleActions: true,  
+                              showTitleActions: true,
                               onConfirm: (date) {
                                 controller.birthday = DateFormat('dd-MM-yyyy')
                                     .format(date)
                                     .toString();
                                 controller.update();
                               },
-                              currentTime: DateTime.now().subtract(Duration(days:6575)),
+                              currentTime:
+                                  DateTime.now().subtract(Duration(days: 6575)),
                               locale: LocaleType.en,
-
-                                  
-                                 
                             ),
                           ),
-                        ),
-
-                      20.verticalSpace,
-                      Center(
-                        child: Container(
-                          height: 50.h,
-                          width: 300.w,
-                          
-                          child: PrimaryButton(text: "save".tr(), onpress: (){})),
-                      )
-                          
-                  ],
-                );
-                      }
-                    )))));
+                          20.verticalSpace,
+                          Center(
+                            child: Container(
+                                height: 50.h,
+                                width: 300.w,
+                                child: PrimaryButton(
+                                    text: "save".tr(),
+                                    onpress: () {
+                                      controller.submit();
+                                    })),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                })));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:get/get.dart';
@@ -59,7 +60,7 @@ class LoginController extends GetxController {
         .first
         .then((value) async {
       List<DocumentSnapshot> documentSnapshot = value.docs;
-      if (value.size != 0) provider = documentSnapshot[0]['washer_type_auth'];
+      // if (value.size != 0) provider = documentSnapshot[0]['washer_auth_type'];
     });
 
     return provider;
@@ -67,17 +68,21 @@ class LoginController extends GetxController {
 
   signInWithEmail(String email, String password) async {
     loading.toggle();
-    update();
+    print('object+$email');
     await userHasMail(email).then((value) async {
-      if (value == "Email" || value == "") {
+      print("valueeeeeeeeeeee: $value");
+      if (value == "Email") {
         try {
           UserCredential authResult = await FirebaseAuth.instance
               .signInWithEmailAndPassword(email: email, password: password);
           User? user = authResult.user;
-          await getUser(user!.uid).then((value) async {
+          await getUser().then((value) async {
             value.client_last_login_date =
                 DateFormat("dd-MM-yyyy HH:mm", "Fr_fr").format(DateTime.now());
             Client userBase = value;
+            print(userBase.toJson().toString());
+            await saveCurrentUser(userBase);
+            await GetStorage().write('user_status', userBase.client_status);
             await completeUser(userBase);
             await SessionManager().set(
               'tmpUser',
@@ -118,13 +123,15 @@ class LoginController extends GetxController {
                 "Ok");
           }
         }
+      } else if (value != "") {
+        Get.snackbar("Error", "Please try to login with $value",
+            backgroundColor: Colors.red, colorText: Colors.white);
       } else {
-        showAlertDialogOneButton(Get.context!, "User already exists",
-            "Please try to login with $value", "Ok");
+        Get.snackbar("Error", "User not found",
+            backgroundColor: Colors.red, colorText: Colors.white);
       }
     });
     loading.toggle();
-    update();
   }
 
   void signInWithGoogle(context) async {
@@ -153,33 +160,34 @@ class LoginController extends GetxController {
           await getUserFrom(user!.email, "Google").then((message) async {
             if (message == "new-account" || message == "is-not-verified") {
               Client userBase = Client(
-                  client_uid: user.uid,
-                  client_full_name: user.displayName!,
-                  client_email: user.email!,
-                  client_phone_number: '-',
-                  client_picture: user.photoURL!,
-                  client_date_naissance: '',
-                  client_sexe: '',
-                  client_auth_type: 'Google',
-                  is_activated_account: false,
-                  client_cancelled_delivery: 0,
-                  client_succeded_delivery: 0,
-                  client_planned_delivery: 0,
-                  client_stars_mean: 0,
-                  client_note: 0,
-                  client_last_order_state: false,
-                  client_last_login_date:
-                      DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                          .format(DateTime.now()),
-                  client_registration_date:
-                      DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                          .format(DateTime.now()),
-                  is_deleted_account: false,
-                  is_verified_account: false,
-                  client_city: '',
-                  client_longitude: 0,
-                  client_latitude: 0,
-                  client_total_orders: 0);
+                client_uid: user.uid,
+                client_full_name: user.displayName!,
+                client_email: user.email!,
+                client_phone_number: '-',
+                client_picture: user.photoURL!,
+                client_date_naissance: '',
+                client_sexe: '',
+                client_auth_type: 'Google',
+                is_activated_account: false,
+                client_cancelled_delivery: 0,
+                client_succeded_delivery: 0,
+                client_planned_delivery: 0,
+                client_stars_mean: 0,
+                client_note: 0,
+                client_last_order_state: false,
+                client_last_login_date: DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                    .format(DateTime.now()),
+                client_registration_date:
+                    DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                        .format(DateTime.now()),
+                is_deleted_account: false,
+                is_verified_account: false,
+                client_city: '',
+                client_longitude: 0,
+                client_latitude: 0,
+                client_total_orders: 0,
+                client_status: 'new',
+              );
               await SessionManager().set(
                 'tmpUser',
                 TmpUser(
@@ -202,7 +210,7 @@ class LoginController extends GetxController {
               );
             }
             if (message == "is-verified") {
-              await getUser(user.uid).then((value) async {
+              await getUser().then((value) async {
                 await SessionManager().set(
                   'tmpUser',
                   TmpUser(
@@ -226,7 +234,7 @@ class LoginController extends GetxController {
                     transition: Transition.rightToLeft);
               });
             } else {
-              await getUser(user.uid).then((value) async {
+              await getUser().then((value) async {
                 await SessionManager().set(
                   'tmpUser',
                   TmpUser(
@@ -260,6 +268,7 @@ class LoginController extends GetxController {
 
   void signInWithFacebook(context) async {
     loading.toggle();
+
     try {
       final LoginResult loginResult = await FacebookAuth.instance.login();
       final OAuthCredential facebookAuthCredential =
@@ -281,33 +290,35 @@ class LoginController extends GetxController {
             await getUserStatus(user.email).then((value) async {
               if (!value) {
                 Client userBase = Client(
-                    client_uid: user.uid,
-                    client_full_name: user.displayName!,
-                    client_email: user.email!,
-                    client_phone_number:  '-',
-                    client_picture: user.photoURL!,
-                    client_date_naissance: '',
-                    client_sexe: '',
-                    client_auth_type: 'Facebook',
-                    is_activated_account: false,
-                    client_cancelled_delivery: 0,
-                    client_succeded_delivery: 0,
-                    client_planned_delivery: 0,
-                    client_stars_mean: 0,
-                    client_note: 0,
-                    client_last_order_state: false,
-                    client_last_login_date:
-                        DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                            .format(DateTime.now()),
-                    client_registration_date:
-                        DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
-                            .format(DateTime.now()),
-                    is_deleted_account: false,
-                    is_verified_account: false,
-                    client_city: '',
-                    client_longitude: 0,
-                    client_latitude: 0,
-                    client_total_orders: 0);
+                  client_uid: user.uid,
+                  client_full_name: user.displayName!,
+                  client_email: user.email!,
+                  client_phone_number: '-',
+                  client_picture: user.photoURL!,
+                  client_date_naissance: '',
+                  client_sexe: '',
+                  client_auth_type: 'Facebook',
+                  is_activated_account: false,
+                  client_cancelled_delivery: 0,
+                  client_succeded_delivery: 0,
+                  client_planned_delivery: 0,
+                  client_stars_mean: 0,
+                  client_note: 0,
+                  client_last_order_state: false,
+                  client_last_login_date:
+                      DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                          .format(DateTime.now()),
+                  client_registration_date:
+                      DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
+                          .format(DateTime.now()),
+                  is_deleted_account: false,
+                  is_verified_account: false,
+                  client_city: '',
+                  client_longitude: 0,
+                  client_latitude: 0,
+                  client_total_orders: 0,
+                  client_status: 'new',
+                );
                 await SessionManager().set(
                   'tmpUser',
                   TmpUser(
@@ -328,7 +339,7 @@ class LoginController extends GetxController {
                   },
                 );
               } else {
-                await getUser(user.uid).then((value) async {
+                await getUser().then((value) async {
                   value.client_last_login_date =
                       DateFormat("dd-MM-yyyy HH:mm", "Fr_fr")
                           .format(DateTime.now());
@@ -365,5 +376,12 @@ class LoginController extends GetxController {
       return showAlertDialogOneButton(context, "Problème avec Facebook",
           "Il n'y avait pas de compte facebook dans ce telephone", "Ok");
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    // emailController.text = "a.berahhou@gmail.com";
+    // passwordController.text = "Admin1234@";
   }
 }

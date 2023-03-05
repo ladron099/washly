@@ -11,12 +11,14 @@ import 'package:washly/views/screens/order_history_detail_screen.dart';
 
 class TextFieldPrimary extends StatelessWidget {
   String hint;
-  Icon?  inputIcon;
+  Icon? inputIcon;
   bool visible;
   bool hasIcon;
+  bool enabled;
   TextEditingController? controller;
   String? Function(String?)? validator;
   TextFieldPrimary({
+    this.enabled = true,
     required this.hint,
     this.inputIcon,
     required this.visible,
@@ -31,6 +33,7 @@ class TextFieldPrimary extends StatelessWidget {
     return Container(
       height: 50.h,
       child: TextFormField(
+        enabled: enabled,
         controller: controller,
         obscureText: visible,
         validator: validator,
@@ -42,8 +45,13 @@ class TextFieldPrimary extends StatelessWidget {
           ),
           prefixIcon: hasIcon ? inputIcon : null,
           filled: true,
-          fillColor: Colors.white,
+          fillColor:
+              enabled ? Colors.white : Color.fromARGB(255, 242, 242, 242),
           enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            borderSide: BorderSide(color: borderGreyColor),
+          ),
+          disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.r),
             borderSide: BorderSide(color: borderGreyColor),
           ),

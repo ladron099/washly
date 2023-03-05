@@ -2,8 +2,7 @@ import 'package:boxicons/boxicons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import 'package:washly/controllers/EditInfoController.dart';
+ 
 import 'package:washly/utils/buttons.dart';
 import 'package:washly/utils/constants.dart';
 import 'package:washly/utils/services.dart';
@@ -125,9 +124,7 @@ class RegisterScreen extends StatelessWidget {
                         20.verticalSpace,
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: GetBuilder<EditInfoController>(
-                            init: EditInfoController(),
-                            builder: (value) => DropDownMenu(
+                          child: DropDownMenu(
                               items: controller.dropdownSexeItems,
                               listItem: controller.sexe,
                               function: (value) {
@@ -136,30 +133,27 @@ class RegisterScreen extends StatelessWidget {
                                 controller.update();
                               },
                             ),
-                          ),
+                          
                         ),
                         20.verticalSpace,
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: GetBuilder<EditInfoController>(
-                            init: EditInfoController(),
-                            builder: (value) => InputDatePicker(
-                              dateText: controller.birthday,
-                              icon: Boxicons.bx_calendar,
-                              function: () => DatePicker.showDatePicker(
-                                context,
-                                showTitleActions: true,
-                                onConfirm: (date) {
-                                  controller.birthdate = date;
-                                  controller.birthday = DateFormat('dd-MM-yyyy')
-                                      .format(date)
-                                      .toString();
-                                  controller.update();
-                                },
-                                currentTime: DateTime.now()
-                                    .subtract(Duration(days: 6575)),
-                                locale: LocaleType.en,
-                              ),
+                          child: InputDatePicker(
+                            dateText: controller.birthday,
+                            icon: Boxicons.bx_calendar,
+                            function: () => DatePicker.showDatePicker(
+                              context,
+                              showTitleActions: true,
+                              onConfirm: (date) {
+                                controller.birthdate = date;
+                                controller.birthday = DateFormat('dd-MM-yyyy')
+                                    .format(date)
+                                    .toString();
+                                controller.update();
+                              },
+                              currentTime:
+                                  DateTime.now().subtract(Duration(days: 6575)),
+                              locale: LocaleType.en,
                             ),
                           ),
                         ),

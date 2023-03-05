@@ -156,5 +156,7 @@
     "enteremail":"Enter your email",
     "sendresetlink":"Reset password",
     "washlywillneveremail":"Washly will never share your email with other companies or use it for marketing purposes.",
-    "ratetext":"We value your feedback and use it to continually improve our service."
+    "ratetext":"We value your feedback and use it to continually improve our service.",
+    "changephonenumber":"Change your phone number",
+    "newpassword":"New password"
 }                      

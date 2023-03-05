@@ -7,15 +7,12 @@ class LoadingScreen extends StatelessWidget {
   LoadingScreen({super.key, required this.loading, required this.child});
 
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=>FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: LoadingOverlay(
-          isLoading: loading,
-          child: child,
-        )
-      ),
-    ); 
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: loading ? Container(height: 50, child: Text("loading")) : child,
+        ));
   }
 }

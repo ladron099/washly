@@ -20,15 +20,15 @@ class MyBehavior extends ScrollBehavior {
 }
 
 Future<Widget> initWidget() async {
-  Widget? main;
+  Widget main = WelcomeScreen();
   final isFirstTime = await GetStorage().read("isFirstTime");
   final isLoggedIn = await GetStorage().read("isLoggedIn");
   final userStatus = await GetStorage().read('user_status');
-  print(userStatus);
-  print(isFirstTime);
-  print(isLoggedIn);
+  print("userStatus $userStatus");
+  print("is first time $isFirstTime");
+  print("isLoggedIn $isLoggedIn");
   if (isFirstTime != null) {
-    if (isLoggedIn != null) {
+    if (isLoggedIn != null || isLoggedIn == true) {
       switch (userStatus) {
         case 'verified':
           main = HomeScreen();
@@ -38,6 +38,9 @@ Future<Widget> initWidget() async {
           break;
         case 'profile':
           main = ProfilePictureScreen();
+          break;
+        case null:
+          main = WelcomeScreen();
           break;
       }
     } else {
@@ -80,7 +83,7 @@ Future<String> getUserFrom(email, type) async {
   await FirebaseFirestore.instance
       .collection('washers')
       .where('washer_email', isEqualTo: email)
-      .where('washer_type_auth', isEqualTo: type)
+      .where('washer_auth_type', isEqualTo: type)
       .where('is_deleted_account', isEqualTo: false)
       .snapshots()
       .first
